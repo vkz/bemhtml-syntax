@@ -1,0 +1,16 @@
+{
+    block: 'b-link',
+    elem: 'e1',
+    content: [
+        {
+            block: 'b-link',
+            elem: 'e1',
+            url: 'yandex.ru'
+        },
+        {
+            block: 'b-link',
+            elem: 'e1',
+            url: 'yandex-team.ru'
+        }
+    ]
+}

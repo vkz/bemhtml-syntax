@@ -1,0 +1,4 @@
+{
+    block: 'b-inner',
+    content: 'inner content'
+}

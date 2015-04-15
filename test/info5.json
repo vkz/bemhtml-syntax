@@ -1,0 +1,4 @@
+{
+    block: 'b-bla',
+    mods: { '0-mode': 'v2' }
+}

@@ -1,0 +1,26 @@
+{
+    "name": "bemhtml-syntax",
+    "version": "0.0.1",
+    "description": "",
+    "main": "lib/syntax.js",
+    "bin": {
+        "bemhtml-syntax": "./bin/bemhtml-syntax"
+    },
+    "scripts": {
+        "test": "mocha --reporter spec test/*-test.js"
+    },
+    "repository": "",
+    "author": "",
+    "license": "",
+    "dependencies": {
+        "ometajs": "~3.2.4",
+        "xjst": "~0.4.21",
+        "esprima": "",
+        "coa": ""
+
+    },
+    "devDependencies": {
+        "bem-xjst": "~0.3.4",
+        "bemhtml-compat": ""
+    }
+}

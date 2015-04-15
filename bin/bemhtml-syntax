@@ -1,0 +1,30 @@
+#!/usr/bin/env node
+
+require('coa').Cmd()
+    .name(process.argv[1])
+    .helpful()
+    .opt()
+        .name('output').title('Output to file (default: stdout)')
+        .short('o').long('output')
+        .output()
+        .end()
+    .opt()
+        .name('input').title('File to convert (default: stdin)')
+        .short('i').long('input')
+        .def(process.stdin)
+        .val(function (v) {
+          if (typeof v === "string") {
+            var fs = require("fs");
+            var s = fs.createReadStream(v, { encoding: 'utf8' });
+            s.pause();
+            return {stream: s, path: fs.realpathSync(v)};
+          } else {
+            return {stream: v, path: "stdin"}
+          }
+        })
+       .end()
+    .act(function(options) {
+        return require('../lib/syntax')
+            .run(options);
+    })
+    .run();
