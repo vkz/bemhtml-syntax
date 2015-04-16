@@ -44,6 +44,8 @@ function show() {
 
     if (t === 'info8' || t === 'info6') {
       pp(ast, {prompt: "ast"});
+      pp(toHtml(transpiled, input), {prompt: "html for " + t});
+      pp(toHtml(newCode, input), {prompt: "html for new " + t});
     }
 
   });
@@ -67,7 +69,8 @@ describe('BEMHTML/syntax', function() {
     assert.equal(
       stringify(ast),
       stringify(
-        [ [ [ [ 'block', [ 'string', 'b-wrapper' ] ],
+        [ [ 'template',
+            [ [ 'block', [ 'string', 'b-wrapper' ] ],
               [ 'tag' ],
               [ 'body', [ 'begin', [ 'return', [ 'string', 'wrap' ] ] ] ] ],
             [ [ 'block', [ 'string', 'b-wrapper' ] ],
@@ -78,7 +81,8 @@ describe('BEMHTML/syntax', function() {
                     [ 'getp',
                       [ 'string', 'content' ],
                       [ 'getp', [ 'string', 'ctx' ], [ 'this' ] ] ] ] ] ] ] ],
-          [ [ [ 'block', [ 'string', 'b-inner' ] ],
+          [ [ 'template',
+              [ 'block', [ 'string', 'b-inner' ] ],
               [ 'default' ],
               [ 'body',
                 [ [ 'begin',
@@ -93,6 +97,27 @@ describe('BEMHTML/syntax', function() {
                              [ 'string', 'content' ],
                              [ 'getp', [ 'string', 'ctx' ], [ 'this' ] ] ] ] ] ]]
                   ] ] ] ] ] ]));
+  });
+
+  it.skip('parse info8 into a simpler AST', function() {
+    var source = tests.info6.old;
+    var ast = syntax.parse(source);
+    assert.equal(
+      stringify(ast),
+      stringify(
+        [ [ 'template',
+            [ [ 'block', [ 'string', 'b1' ] ],
+              [ 'tag' ],
+              [ 'body', [ 'begin', [ 'return', [ 'string', 'span' ] ] ] ] ]],
+          [ 'template',
+            [ [ 'block', [ 'string', 'b1' ] ],
+              [ 'tag' ],
+              [ 'body',
+                [ 'begin', [ 'return', [ 'call', [ 'get', 'applyNext' ] ] ] ] ] ],
+            [ [ 'block', [ 'string', 'b1' ] ],
+              [ 'content' ],
+              [ 'body',
+                [ 'begin', [ 'return', [ 'string', 'b1 content' ] ] ] ] ] ]]));
   });
 
 });
