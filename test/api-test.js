@@ -34,8 +34,8 @@ templates.forEach(function (t) {
   var oldResult  = bemxjst.compile(oldCode, {}).apply.call(input),
       newResult  = bemxjst.compile(newCode, {}).apply.call(input);
 
-  pp(oldResult, {prompt: "oldResult"});
-  pp(newResult, {prompt: "newResult"});
+  pp(oldResult, {prompt: "old syntax"});
+  pp(newResult, {prompt: "new syntax"});
 });
 
 
