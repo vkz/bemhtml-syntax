@@ -38,15 +38,12 @@ function show() {
     var files = tests[t],
         oldCode = files['old'],
         transpiled = compat.transpile(oldCode),
-        ast = syntax.parse(files['old']),
+        ast = syntax.parse(oldCode),
         newCode = files['new'],
         input = files['json'];
 
-    if (t === 'info8') {
-      pp(transpiled, {prompt: "transpiled"});
+    if (t === 'info8' || t === 'info6') {
       pp(ast, {prompt: "ast"});
-      pp(toHtml(transpiled, input), {prompt: "old html"});
-      pp(toHtml(newCode, input), {prompt: "new html"});
     }
 
   });
@@ -84,16 +81,18 @@ describe('BEMHTML/syntax', function() {
           [ [ [ 'block', [ 'string', 'b-inner' ] ],
               [ 'default' ],
               [ 'body',
-                [ [ 'stmt',
-                    [ 'call',
-                      [ 'get', 'func' ],
-                      [ 'json',
-                        [ 'binding', 'block', [ 'string', 'b' ] ],
-                        [ 'binding',
-                          'content',
-                          [ 'getp',
-                            [ 'string', 'content' ],
-                            [ 'getp', [ 'string', 'ctx' ], [ 'this' ] ] ] ] ] ] ] ] ] ] ] ]));
+                [ [ 'begin',
+                    ['return',
+                     [ 'call',
+                       [ 'get', 'applyCtx' ],
+                       [ 'json',
+                         [ 'binding', 'block', [ 'string', 'b' ] ],
+                         [ 'binding',
+                           'content',
+                           [ 'getp',
+                             [ 'string', 'content' ],
+                             [ 'getp', [ 'string', 'ctx' ], [ 'this' ] ] ] ] ] ]]
+                  ] ] ] ] ] ]));
   });
 
 });
