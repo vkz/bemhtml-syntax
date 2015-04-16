@@ -1,3 +1,6 @@
 block 'b1', tag: 'span'
 
-block 'b1', tag: applyNext()
+block 'b1' {
+  tag: applyNext()
+  content: 'b1 content'
+}

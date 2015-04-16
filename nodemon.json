@@ -1,6 +1,6 @@
 {
     "verbose": true,
     "watch": [ "./" ],
-    "ext": "js json ometajs",
+    "ext": "js json ometajs bemhtml bemhtml.js",
     "exec": "npm test"
 }
