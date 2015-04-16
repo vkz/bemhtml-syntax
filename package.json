@@ -16,8 +16,8 @@
         "ometajs": "~3.2.4",
         "xjst": "~0.4.21",
         "esprima": "",
-        "coa": ""
-
+        "coa": "",
+        "escodegen": ""
     },
     "devDependencies": {
         "bem-xjst": "~0.3.4",

@@ -5,7 +5,8 @@ var path = require('path');
 var pp = require("zeHelpers").prettyPrint;
 var bemxjst = require("bem-xjst");
 var compat = require('bemhtml-compat');
-
+var esprima = require("esprima");
+var esgen = require("escodegen").generate;
 
 // TODO pull proper latest i-bem.bemhtml from bem-core
 var ibem = require('./fixtures/i-bem');
@@ -25,34 +26,63 @@ templates.forEach(function (file) {
   };
 });
 
-templates.forEach(function (t) {
-  var files = tests[t],
-      oldCode = ibem + compat.transpile(files['old']),
-      newCode = ibem + files['new'],
-      input = files['json'];
+function show() {
+  templates.forEach(function (t) {
+    var files = tests[t],
+        transpiled = compat.transpile(files['old']),
+        ast = compat.parse(files['old']),
+        oldCode = ibem + transpiled,
+        newCode = ibem + files['new'],
+        input = files['json'];
 
-  var oldResult  = bemxjst.compile(oldCode, {}).apply.call(input),
-      newResult  = bemxjst.compile(newCode, {}).apply.call(input);
+    pp(files['old'], {prompt: "code"});
+    pp(ast, {prompt: "ast"});
 
-  pp(oldResult, {prompt: "old syntax"});
-  pp(newResult, {prompt: "new syntax"});
-});
+    var oldResult  = bemxjst.compile(oldCode, {}).apply.call(input),
+        newResult  = bemxjst.compile(newCode, {}).apply.call(input);
+  });
+}
 
+function getSource(fn) {
+  return fn.toString().replace(/^function\s*\(\)\s*{\/\*|\*\/}$/g, '');
+}
+
+function stringify(thing) {
+  return pp(thing, {stringify: true});
+}
 
 describe('BEMHTML/syntax', function() {
-  function getSource(fn) {
-    return fn.toString().replace(/^function\s*\(\)\s*{\/\*|\*\/}$/g, '');
-  }
 
-  it('should parse old source', function() {
-    assert(false);
+  it('parse info6 into a simpler AST', function() {
+    var source = tests.info6.old;
+    var ast = syntax.parse(source);
+    assert.equal(
+      stringify(ast),
+      stringify(
+        [ [ [ [ 'block', [ 'string', 'b-wrapper' ] ],
+            [ 'tag' ],
+            [ 'body', [ 'begin', [ 'return', [ 'string', 'wrap' ] ] ] ] ],
+          [ [ 'block', [ 'string', 'b-wrapper' ] ],
+            [ 'content' ],
+            [ 'body',
+              [ 'begin',
+                [ 'return',
+                  [ 'getp',
+                    [ 'string', 'content' ],
+                    [ 'getp', [ 'string', 'ctx' ], [ 'this' ] ] ] ] ] ] ] ],
+        [ [ [ 'block', [ 'string', 'b-inner' ] ],
+            [ 'default' ],
+            [ 'body',
+              [ [ 'stmt',
+                  [ 'call',
+                    [ 'get', 'func' ],
+                    [ 'json',
+                      [ 'binding', 'block', [ 'string', 'b' ] ],
+                      [ 'binding',
+                        'content',
+                        [ 'getp',
+                          [ 'string', 'content' ],
+                          [ 'getp', [ 'string', 'ctx' ], [ 'this' ] ] ] ] ] ] ] ] ] ] ] ]));
   });
 
-  it('should transpile old source', function() {
-    assert(false);
-  });
-
-  it('should transpile old & new sources', function() {
-    assert(false);
-  });
 });

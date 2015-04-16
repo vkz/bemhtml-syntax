@@ -1,0 +1,31 @@
+block b-wrapper {
+  tag: 'wrap'
+  content: this.ctx.content
+}
+
+block b-inner, default: applyCtx({ block: 'b-wrapper', content: this.ctx.content })
+
+[ [ [ [ 'block', [ 'string', 'b-wrapper' ] ],
+      [ 'tag' ],
+      [ 'body', [ 'begin', [ 'return', [ 'string', 'wrap' ] ] ] ] ],
+    [ [ 'block', [ 'string', 'b-wrapper' ] ],
+      [ 'content' ],
+      [ 'body',
+        [ 'begin',
+          [ 'return',
+            [ 'getp',
+              [ 'string', 'content' ],
+              [ 'getp', [ 'string', 'ctx' ], [ 'this' ] ] ] ] ] ] ] ],
+  [ [ [ 'block', [ 'string', 'b-inner' ] ],
+      [ 'default' ],
+      [ 'body',
+        [ [ 'stmt',
+            [ 'call',
+              [ 'get', 'func' ],
+              [ 'json',
+                [ 'binding', 'block', [ 'string', 'b' ] ],
+                [ 'binding',
+                  'content',
+                  [ 'getp',
+                    [ 'string', 'content' ],
+                    [ 'getp', [ 'string', 'ctx' ], [ 'this' ] ] ] ] ] ] ] ] ] ] ] ]
