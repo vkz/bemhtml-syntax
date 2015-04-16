@@ -12,7 +12,7 @@ var esgen = require("escodegen").generate;
 var ibem = require('./fixtures/i-bem');
 
 var tests = {},
-    templates = [ 'info1', 'info2', 'info3', 'info5', 'info6', 'info7' ];
+    templates = [ 'info1', 'info2', 'info3', 'info5', 'info6', 'info7', 'info8' ];
 
 templates.forEach(function (file) {
   var dir = path.dirname(module.filename),
@@ -26,22 +26,32 @@ templates.forEach(function (file) {
   };
 });
 
+function toHtml(code, input) {
+  return bemxjst.compile(ibem + code, {}).apply.call(input);
+}
+
 function show() {
   templates.forEach(function (t) {
+
+    console.log('\n ---------------------------------------\n', t, '\n');
+
     var files = tests[t],
-        transpiled = compat.transpile(files['old']),
-        ast = compat.parse(files['old']),
-        oldCode = ibem + transpiled,
-        newCode = ibem + files['new'],
+        oldCode = files['old'],
+        transpiled = compat.transpile(oldCode),
+        ast = syntax.parse(files['old']),
+        newCode = files['new'],
         input = files['json'];
 
-    pp(files['old'], {prompt: "code"});
-    pp(ast, {prompt: "ast"});
+    if (t === 'info8') {
+      pp(transpiled, {prompt: "transpiled"});
+      pp(ast, {prompt: "ast"});
+      pp(toHtml(transpiled, input), {prompt: "old html"});
+      pp(toHtml(newCode, input), {prompt: "new html"});
+    }
 
-    var oldResult  = bemxjst.compile(oldCode, {}).apply.call(input),
-        newResult  = bemxjst.compile(newCode, {}).apply.call(input);
   });
 }
+show();
 
 function getSource(fn) {
   return fn.toString().replace(/^function\s*\(\)\s*{\/\*|\*\/}$/g, '');
@@ -53,7 +63,8 @@ function stringify(thing) {
 
 describe('BEMHTML/syntax', function() {
 
-  it('parse info6 into a simpler AST', function() {
+  // TODO skipped while investigating! Remember to UNskip it.
+  it.skip('parse info6 into a simpler AST', function() {
     var source = tests.info6.old;
     var ast = syntax.parse(source);
     assert.equal(
