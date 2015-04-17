@@ -34,7 +34,6 @@ function show() {
   templates.forEach(function (t) {
 
     console.log('\n ---------------------------------------\n', t, '\n');
-
     var files = tests[t],
         oldCode = files['old'],
         transpiled = compat.transpile(oldCode),
@@ -42,11 +41,8 @@ function show() {
         newCode = files['new'],
         input = files['json'];
 
-    if (t === 'info8' || t === 'info6') {
-      pp(ast, {prompt: "ast"});
-      pp(toHtml(transpiled, input), {prompt: "html for " + t});
-      pp(toHtml(newCode, input), {prompt: "html for new " + t});
-    }
+    console.log(oldCode);
+    pp(ast, {prompt: "ast"});
 
   });
 }
@@ -95,7 +91,7 @@ describe('BEMHTML/syntax', function() {
                            'content',
                            [ 'getp',
                              [ 'string', 'content' ],
-                             [ 'getp', [ 'string', 'ctx' ], [ 'this' ] ] ] ] ] ]]
+                             [ 'getp', [ 'string', 'ctx' ], [ 'this' ] ] ] ] ] ] ]
                   ] ] ] ] ] ]));
   });
 
@@ -108,7 +104,7 @@ describe('BEMHTML/syntax', function() {
         [ [ 'template',
             [ [ 'block', [ 'string', 'b1' ] ],
               [ 'tag' ],
-              [ 'body', [ 'begin', [ 'return', [ 'string', 'span' ] ] ] ] ]],
+              [ 'body', [ 'begin', [ 'return', [ 'string', 'span' ] ] ] ] ] ],
           [ 'template',
             [ [ 'block', [ 'string', 'b1' ] ],
               [ 'tag' ],
@@ -117,7 +113,7 @@ describe('BEMHTML/syntax', function() {
             [ [ 'block', [ 'string', 'b1' ] ],
               [ 'content' ],
               [ 'body',
-                [ 'begin', [ 'return', [ 'string', 'b1 content' ] ] ] ] ] ]]));
+                [ 'begin', [ 'return', [ 'string', 'b1 content' ] ] ] ] ] ] ]));
   });
 
 });
