@@ -1,0 +1,48 @@
+block post, elem date {
+
+    content, /\d{13}/.test(this.ctx.content) : [
+        apply('format')
+    ]
+
+    format: {
+        date = new Date();
+        date.setTime(this.ctx.content)
+
+        var  d = date.getDate(),
+             D = date.getDate(),
+             m = date.getMonth(),
+             y = date.getFullYear();
+        return D + ' ' + BEM.I18N('post', 'month' + m) + ' ' + y;
+    }
+}
+
+block post, elem date, elemMod type human {
+
+    default, (!this.ctx.createDate && !this.ctx.editDate): {
+        return false;
+    }
+
+    content {
+
+        (this.ctx.createDate && (!this.ctx.editDate || this.ctx.editDate < this.ctx.createDate)): {
+
+            return [
+                BEM.I18N('post', 'createDate'),
+                ' ',
+                applyNext(this.ctx.content = this.ctx.createDate)
+            ]
+        }
+
+        (this.ctx.createDate && this.ctx.editDate && this.ctx.editDate >= this.ctx.createDate): {
+
+            return [
+                BEM.I18N('post', 'editDate'),
+                ' ',
+                applyNext(this.ctx.content = this.ctx.editDate)
+            ]
+        }
+
+    }
+
+}
+

@@ -12,12 +12,12 @@ var esgen = require("escodegen").generate;
 var ibem = require('./fixtures/i-bem');
 
 var tests = {},
-    templates = [ 'info1', 'info2', 'info3', 'info5', 'info6', 'info7', 'info8' ];
+    templates = [ 'info1', 'info2', 'info3', 'info5', 'info6', 'info7', 'info8' ],
+    dir = path.dirname(module.filename),
+    utf8 = { encoding:'utf8' };
 
 templates.forEach(function (file) {
-  var dir = path.dirname(module.filename),
-      utf8 = { encoding:'utf8' },
-      base = dir + '/' + file;
+  var base = dir + '/' + file;
 
   tests[file] = {
     'old': fs.readFileSync(base + '.bemhtml', utf8),
@@ -30,8 +30,8 @@ function toHtml(code, input) {
   return bemxjst.compile(ibem + code, {}).apply.call(input);
 }
 
-function show() {
-  templates.forEach(function (t) {
+function show(tests) {
+  Object.keys(tests).forEach(function (t) {
 
     console.log('\n ---------------------------------------\n', t, '\n');
     var files = tests[t],
@@ -46,7 +46,21 @@ function show() {
 
   });
 }
-show();
+
+var bemSiteDir = path.join(dir, 'bem-site-engine'),
+    bemSiteFiles = fs.readdirSync(bemSiteDir).map(function (f) {
+      return path.resolve(path.join(bemSiteDir, f));
+    }),
+    bemSiteTemplates =  bemSiteFiles.reduce(function (ts, f) {
+      ts[f] = {
+        'old': fs.readFileSync(f, utf8),
+        'new': '',
+        'json': ''
+      };
+      return ts;
+    }, {});
+
+show(bemSiteTemplates);
 
 function getSource(fn) {
   return fn.toString().replace(/^function\s*\(\)\s*{\/\*|\*\/}$/g, '');

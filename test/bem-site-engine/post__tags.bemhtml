@@ -1,0 +1,27 @@
+block post, elem tags {
+
+    default, !(this.ctx && this.ctx.content && this.ctx.content.length): {
+        return false;
+    }
+
+    content, this._.isArray(this.ctx.content): {
+        var buf = [],
+            delimeter = {
+                tag: 'span',
+                content: ' '
+            };
+
+        this.ctx.content.forEach(function(item, index) {
+            index > 0 && buf.push(delimeter);
+
+            buf.push({
+                block: 'link',
+                url: '/tags/' + item,
+                content: item
+            });
+        });
+
+        return buf;
+
+    }
+}

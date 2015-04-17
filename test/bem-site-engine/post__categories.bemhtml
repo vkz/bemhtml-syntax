@@ -1,0 +1,26 @@
+block post, elem categories {
+
+    default, !(this.ctx && this.ctx.breadcrumbs && this.ctx.breadcrumbs.length > 1): {
+        return false;
+    }
+
+    content : apply('breadcrumbs')
+
+    breadcrumbs, this._.isArray(this.ctx.breadcrumbs): {
+        var buf = [];
+        this.ctx.breadcrumbs.forEach(function(item, index) {
+
+            index > 0 && buf.push({
+                tag: 'span',
+                content: ' &rarr; '
+            });
+
+            buf.push({
+                block: 'link',
+                url: item.url,
+                content: item.title[this.ctx.lang]
+            });
+        }, this);
+        return buf;
+    }
+}

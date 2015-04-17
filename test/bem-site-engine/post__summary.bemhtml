@@ -1,0 +1,6 @@
+block post, elem summary {
+
+    default, !(this.ctx && this.ctx.content): {
+        return false;
+    }
+}
