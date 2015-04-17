@@ -61,7 +61,7 @@ var bemSiteDir = path.join(dir, 'bem-site-engine'),
     }, {});
 
 // show(bemSiteTemplates);
-show(tests);
+// show(tests);
 
 function getSource(fn) {
   return fn.toString().replace(/^function\s*\(\)\s*{\/\*|\*\/}$/g, '');
@@ -71,64 +71,71 @@ function stringify(thing) {
   return pp(thing, {stringify: true});
 }
 
-describe('BEMHTML/syntax', function() {
+describe('BEMHTML/Parser should parse', function() {
 
-  // TODO skipped while investigating! Remember to UNskip it.
-  it.skip('parse info6 into a simpler AST', function() {
+  it('2 templates in one file', function() {
     var source = tests.info6.old;
     var ast = syntax.parse(source);
-    assert.equal(
-      stringify(ast),
-      stringify(
-        [ [ 'template',
-            [ [ 'block', [ 'string', 'b-wrapper' ] ],
-              [ 'tag' ],
-              [ 'body', [ 'begin', [ 'return', [ 'string', 'wrap' ] ] ] ] ],
-            [ [ 'block', [ 'string', 'b-wrapper' ] ],
-              [ 'content' ],
+    assert
+      .deepEqual(
+        ast,
+        [ [ [ 'block', [ 'string', 'b-wrapper' ] ],
+            [ [ [ 'tag' ],
+                [ 'body', [ 'begin', [ 'return', [ 'string', 'wrap' ] ] ] ] ],
+              [ [ 'content' ],
+                [ 'body',
+                  [ 'begin',
+                    [ 'return',
+                      [ 'getp',
+                        [ 'string', 'content' ],
+                        [ 'getp', [ 'string', 'ctx' ], [ 'this' ] ] ] ] ] ] ] ] ],
+          [ [ 'block', [ 'string', 'b-inner' ] ],
+            [ [ 'default' ],
               [ 'body',
                 [ 'begin',
                   [ 'return',
-                    [ 'getp',
-                      [ 'string', 'content' ],
-                      [ 'getp', [ 'string', 'ctx' ], [ 'this' ] ] ] ] ] ] ] ],
-          [ [ 'template',
-              [ 'block', [ 'string', 'b-inner' ] ],
-              [ 'default' ],
-              [ 'body',
-                [ [ 'begin',
-                    ['return',
-                     [ 'call',
-                       [ 'get', 'applyCtx' ],
-                       [ 'json',
-                         [ 'binding', 'block', [ 'string', 'b' ] ],
-                         [ 'binding',
-                           'content',
-                           [ 'getp',
-                             [ 'string', 'content' ],
-                             [ 'getp', [ 'string', 'ctx' ], [ 'this' ] ] ] ] ] ] ]
-                  ] ] ] ] ] ]));
+                    [ 'call',
+                      [ 'get', 'applyCtx' ],
+                      [ 'json',
+                        [ 'binding', 'block', [ 'string', 'b-wrapper' ] ],
+                        [ 'binding',
+                          'content',
+                          [ 'getp',
+                            [ 'string', 'content' ],
+                            [ 'getp', [ 'string', 'ctx' ], [ 'this' ] ] ] ] ] ] ] ] ] ] ] ] );
   });
 
-  it.skip('parse info8 into a simpler AST', function() {
-    var source = tests.info6.old;
+  it('template with multiple mods and custom predicate', function() {
+    var source = tests.info7.old;
     var ast = syntax.parse(source);
-    assert.equal(
-      stringify(ast),
-      stringify(
-        [ [ 'template',
-            [ [ 'block', [ 'string', 'b1' ] ],
-              [ 'tag' ],
-              [ 'body', [ 'begin', [ 'return', [ 'string', 'span' ] ] ] ] ] ],
-          [ 'template',
-            [ [ 'block', [ 'string', 'b1' ] ],
-              [ 'tag' ],
-              [ 'body',
-                [ 'begin', [ 'return', [ 'call', [ 'get', 'applyNext' ] ] ] ] ] ],
-            [ [ 'block', [ 'string', 'b1' ] ],
-              [ 'content' ],
-              [ 'body',
-                [ 'begin', [ 'return', [ 'string', 'b1 content' ] ] ] ] ] ] ]));
+    assert.deepEqual(
+      ast,
+      [ [ [ 'block', [ 'string', 'b-link' ] ],
+          [ [ 'elem', [ 'string', 'e1' ] ],
+            [ [ [ 'tag' ],
+                [ 'body', [ 'begin', [ 'return', [ 'string', 'span' ] ] ] ] ],
+              [ [ 'xjst',
+                  [ 'getp',
+                    [ 'string', 'url' ],
+                    [ 'getp', [ 'string', 'ctx' ], [ 'this' ] ] ] ],
+                [ [ [ 'tag' ],
+                    [ 'body', [ 'begin', [ 'return', [ 'string', 'a' ] ] ] ] ],
+                  [ [ 'attrs' ],
+                    [ 'body',
+                      [ 'begin',
+                        [ 'return',
+                          [ 'json',
+                            [ 'binding',
+                              'href',
+                              [ 'getp',
+                                [ 'string', 'url' ],
+                                [ 'getp', [ 'string', 'ctx' ], [ 'this' ] ] ] ] ] ] ] ] ],
+                  [ [ 'reset' ],
+                    [ [ [ 'attrs' ],
+                        [ 'body',
+                          [ 'begin',
+                            [ 'return',
+                              [ 'json', [ 'binding', 'href', [ 'get', 'undefined' ] ] ] ] ] ] ] ] ] ] ] ] ] ] ]);
   });
 
 });
