@@ -12,7 +12,7 @@ var esgen = require("escodegen").generate;
 var ibem = require('./fixtures/i-bem');
 
 var tests = {},
-    templates = [ 'info1', 'info2', 'info3', 'info5', 'info6', 'info7', 'info8' ],
+    templates = [ 'info1', 'info2', 'info3', 'info5', 'info6', 'info7', 'info8', 'info9'],
     dir = path.dirname(module.filename),
     utf8 = { encoding:'utf8' };
 
@@ -44,6 +44,11 @@ function show(tests) {
     console.log(oldCode);
     pp(ast, {prompt: "ast"});
 
+    if (t === 'info9') {
+      pp(compat.parse(oldCode), {prompt: "compat.parse(oldCode)"});
+      pp(compat.transpile(oldCode), {prompt: "compat.transpile(oldCode)"});
+    }
+
   });
 }
 
@@ -60,7 +65,8 @@ var bemSiteDir = path.join(dir, 'bem-site-engine'),
       return ts;
     }, {});
 
-show(bemSiteTemplates);
+// show(bemSiteTemplates);
+show(tests);
 
 function getSource(fn) {
   return fn.toString().replace(/^function\s*\(\)\s*{\/\*|\*\/}$/g, '');

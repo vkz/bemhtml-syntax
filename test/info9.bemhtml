@@ -1,0 +1,1 @@
+block b1, content: applyNext(this._bla = true)
