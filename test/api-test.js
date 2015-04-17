@@ -44,11 +44,6 @@ function show(tests) {
     console.log(oldCode);
     pp(ast, {prompt: "ast"});
 
-    if (t === 'info9') {
-      pp(compat.parse(oldCode), {prompt: "compat.parse(oldCode)"});
-      pp(compat.transpile(oldCode), {prompt: "compat.transpile(oldCode)"});
-    }
-
   });
 }
 
