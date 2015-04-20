@@ -49,12 +49,12 @@ function show(tests) {
     if (true) {
       console.log('\n ---------------------------------------\n', t, '\n');
       console.log(oldCode);
-      console.log('~~~');
-      console.log(newCode);
+      // console.log('~~~');
+      // console.log(newCode);
       console.log('~~~');
       pp(ast, {prompt: "ast"});
       console.log('~~~');
-      syntax.translate(ast);
+      pp(syntax.translate(ast), {prompt: "syntax.translate(ast)"});;
     }
 
   });
