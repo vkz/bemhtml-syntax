@@ -45,7 +45,8 @@ function show(tests) {
         input = files['json'];
 
     // if (t === 'info6' || t === 'info7') {
-    if (t === 'info7') {
+    // if (t === 'info1') {
+    if (true) {
       console.log('\n ---------------------------------------\n', t, '\n');
       console.log(oldCode);
       console.log('~~~');
