@@ -8,6 +8,10 @@ var compat = require('bemhtml-compat');
 var esprima = require("esprima");
 var esgen = require("escodegen").generate;
 
+
+var ometajs = require('ometajs');
+var BEMHTMLToXJST = require('../lib/ometa/bemhtml').BEMHTMLToXJST;
+
 // TODO pull proper latest i-bem.bemhtml from bem-core
 var ibem = require('./fixtures/i-bem');
 
@@ -33,7 +37,6 @@ function toHtml(code, input) {
 function show(tests) {
   Object.keys(tests).forEach(function (t) {
 
-    console.log('\n ---------------------------------------\n', t, '\n');
     var files = tests[t],
         oldCode = files['old'],
         transpiled = compat.transpile(oldCode),
@@ -41,8 +44,17 @@ function show(tests) {
         newCode = files['new'],
         input = files['json'];
 
-    console.log(oldCode);
-    pp(ast, {prompt: "ast"});
+    // if (t === 'info6' || t === 'info7') {
+    if (t === 'info7') {
+      console.log('\n ---------------------------------------\n', t, '\n');
+      console.log(oldCode);
+      console.log('~~~');
+      console.log(newCode);
+      console.log('~~~');
+      pp(ast, {prompt: "ast"});
+      console.log('~~~');
+      syntax.translate(ast);
+    }
 
   });
 }
@@ -61,7 +73,7 @@ var bemSiteDir = path.join(dir, 'bem-site-engine'),
     }, {});
 
 // show(bemSiteTemplates);
-// show(tests);
+show(tests);
 
 function getSource(fn) {
   return fn.toString().replace(/^function\s*\(\)\s*{\/\*|\*\/}$/g, '');
