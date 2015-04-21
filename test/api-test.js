@@ -84,6 +84,49 @@ function stringify(thing) {
   return pp(thing, {stringify: true});
 }
 
+function test(name, oldCode, newCode, input) {
+  var result;
+  it("compile " + name, function () {
+
+    try {
+      result = syntax.compile(oldCode);
+    } catch (e) {
+      throw e
+    };
+
+    assert.equal(
+      esgen(esprima.parse(result)),
+      esgen(esprima.parse(newCode)));
+
+    describe("Compiled " + name + " when applied should", function () {
+
+      it("produce the same HTML as compat-compiled", function () {
+        assert.equal(
+          toHtml(result, input),
+          toHtml(compat.transpile(oldCode), input));
+      });
+
+      it("produce the same HTML as hand-written template", function () {
+        assert.equal(
+          toHtml(result, input),
+          toHtml(newCode, input));
+      });
+    });
+  });
+}
+
+function run(tests) {
+  Object.keys(tests).forEach(function (name) {
+
+    var files = tests[name],
+        oldCode = files['old'],
+        newCode = files['new'],
+        input = files['json'];
+
+    test(name, oldCode, newCode, input);
+  });
+}
+
 describe('BEMHTML/Parser should parse', function() {
 
   it('2 templates in one file', function() {
@@ -229,4 +272,8 @@ describe('BEMHTML/Identity should expand', function() {
     );
   });
 
+});
+
+describe('BEMHTML/Compile should ', function() {
+  run(tests);
 });
