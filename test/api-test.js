@@ -62,7 +62,6 @@ function show(tests) {
 
       console.log('~~~ ' + "compiling ...");
       pp(esgen(esprima.parse(syntax.compile(oldCode))), {prompt: "syntax.compile(extAst)"});
-      // pp(syntax.compile(oldCode), {prompt: "syntax.compile(extAst)"});
 
     }
 
@@ -273,7 +272,7 @@ describe('BEMHTML/Identity should expand', function() {
                                      [ 'getp',
                                        [ 'string', 'url' ],
                                        [ 'getp', [ 'string', 'ctx' ], [ 'this' ] ] ] ] ] ] ] ] ],
-                         [ [ 'mode', 'reset' ],
+                         [ [ 'mode', '"reset"' ],
                            [ 'sub',
                              [ [ [ 'std', 'attrs' ],
                                  [ 'body',
