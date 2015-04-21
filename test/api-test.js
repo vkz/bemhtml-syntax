@@ -46,8 +46,8 @@ function show(tests) {
         input = files['json'];
 
     // if (t === 'info1' || t === 'info2') {
-    // if (t === 'info7') {
-      if (true) {
+    // if (t === 'info1') {
+    if (false) {
       console.log('\n ---------------------------------------\n', t, '\n');
       console.log(oldCode);
 
@@ -60,8 +60,9 @@ function show(tests) {
       console.log('~~~ ' + "translating ...");
       pp(extAst, {prompt: "syntax.translate(ast)"});
 
-      // console.log('~~~ ' + "compiling ...");
-      // pp(esgen(esprima.parse(syntax.compile(oldCode))), {prompt: "syntax.compile(extAst)"});
+      console.log('~~~ ' + "compiling ...");
+      pp(esgen(esprima.parse(syntax.compile(oldCode))), {prompt: "syntax.compile(extAst)"});
+      // pp(syntax.compile(oldCode), {prompt: "syntax.compile(extAst)"});
 
     }
 
@@ -283,6 +284,6 @@ describe('BEMHTML/Identity should expand', function() {
 
 });
 
-describe.skip('BEMHTML/Compile should ', function() {
+describe('BEMHTML/Compile should ', function() {
   run(tests);
 });
