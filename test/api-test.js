@@ -255,7 +255,7 @@ describe('BEMHTML/Identity should expand', function() {
                [ 'sub',
                  [ [ [ 'std', 'tag' ],
                      [ 'body', [ 'begin', [ 'return', [ 'string', 'span' ] ] ] ] ],
-                   [ [ 'xjst',
+                   [ [ 'match',
                        [ 'getp',
                          [ 'string', 'url' ],
                          [ 'getp', [ 'string', 'ctx' ], [ 'this' ] ] ] ],
