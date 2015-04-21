@@ -228,7 +228,7 @@ describe('BEMHTML/Identity should expand', function() {
           ['template',
            [ [ 'block', [ 'string', 'b-inner' ] ],
              [ 'dot',
-               [ [ 'std', 'default' ],
+               [ [ 'std', 'def' ],
                  [ 'body',
                    [ 'begin',
                      [ 'return',
