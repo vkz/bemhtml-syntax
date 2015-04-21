@@ -45,7 +45,7 @@ function show(tests) {
         newCode = files['new'],
         input = files['json'];
 
-    // if (t === 'info6' || t === 'info7') {
+    // if (t === 'info1' || t === 'info2') {
     // if (t === 'info1') {
     if (true) {
       console.log('\n ---------------------------------------\n', t, '\n');
@@ -54,14 +54,14 @@ function show(tests) {
       console.log('~~~');
       console.log(newCode);
 
-      console.log('~~~ ' + "parsing ...");
-      pp(ast, {prompt: "ast"});
+      // console.log('~~~ ' + "parsing ...");
+      // pp(ast, {prompt: "ast"});
 
       console.log('~~~ ' + "translating ...");
       pp(extAst, {prompt: "syntax.translate(ast)"});
 
       console.log('~~~ ' + "compiling ...");
-      pp(syntax.compile(oldCode), {prompt: "syntax.compile(extAst)"});
+      pp(esgen(esprima.parse(syntax.compile(oldCode))), {prompt: "syntax.compile(extAst)"});
 
     }
 
@@ -82,7 +82,7 @@ var bemSiteDir = path.join(dir, 'bem-site-engine'),
     }, {});
 
 // show(bemSiteTemplates);
-show(tests);
+// show(tests);
 
 function getSource(fn) {
   return fn.toString().replace(/^function\s*\(\)\s*{\/\*|\*\/}$/g, '');
@@ -285,6 +285,6 @@ describe('BEMHTML/Identity should expand', function() {
 
 });
 
-describe.skip('BEMHTML/Compile should ', function() {
+describe('BEMHTML/Compile should ', function() {
   run(tests);
 });
