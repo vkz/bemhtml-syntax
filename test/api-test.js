@@ -50,8 +50,9 @@ function show(tests) {
     if (true) {
       console.log('\n ---------------------------------------\n', t, '\n');
       console.log(oldCode);
-      // console.log('~~~');
-      // console.log(newCode);
+
+      console.log('~~~');
+      console.log(newCode);
 
       console.log('~~~ ' + "parsing ...");
       pp(ast, {prompt: "ast"});
@@ -59,8 +60,8 @@ function show(tests) {
       console.log('~~~ ' + "translating ...");
       pp(extAst, {prompt: "syntax.translate(ast)"});
 
-      // console.log('~~~ ' + "compiling ...");
-      // pp(syntax.compile(extAst), {prompt: "syntax.compile(extAst)"});
+      console.log('~~~ ' + "compiling ...");
+      pp(syntax.compile(oldCode), {prompt: "syntax.compile(extAst)"});
 
     }
 
