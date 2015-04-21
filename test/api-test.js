@@ -59,8 +59,9 @@ function show(tests) {
       console.log('~~~ ' + "translating ...");
       pp(extAst, {prompt: "syntax.translate(ast)"});
 
-      console.log('~~~ ' + "compiling ...");
-      pp(syntax.compile(extAst), {prompt: "syntax.compile(extAst)"});
+      // console.log('~~~ ' + "compiling ...");
+      // pp(syntax.compile(extAst), {prompt: "syntax.compile(extAst)"});
+
     }
 
   });
@@ -211,32 +212,34 @@ describe('BEMHTML/Identity should expand', function() {
     assert
       .deepEqual(
         extAst,
-        [ [ [ 'block', [ 'string', 'b-wrapper' ] ],
-            [ 'sub',
-              [ [ [ 'std', 'tag' ],
-                  [ 'body', [ 'begin', [ 'return', [ 'string', 'wrap' ] ] ] ] ],
-                [ [ 'std', 'content' ],
-                  [ 'body',
-                    [ 'begin',
-                      [ 'return',
-                        [ 'getp',
-                          [ 'string', 'content' ],
-                          [ 'getp', [ 'string', 'ctx' ], [ 'this' ] ] ] ] ] ] ] ] ] ],
-          [ [ 'block', [ 'string', 'b-inner' ] ],
-            [ 'dot',
-              [ [ 'std', 'default' ],
-                [ 'body',
-                  [ 'begin',
-                    [ 'return',
-                      [ 'call',
-                        [ 'get', 'applyCtx' ],
-                        [ 'json',
-                          [ 'binding', 'block', [ 'string', 'b-wrapper' ] ],
-                          [ 'binding',
-                            'content',
-                            [ 'getp',
-                              [ 'string', 'content' ],
-                              [ 'getp', [ 'string', 'ctx' ], [ 'this' ] ] ] ] ] ] ] ] ] ] ] ] ] );
+        [ ['template',
+           [ [ 'block', [ 'string', 'b-wrapper' ] ],
+             [ 'sub',
+               [ [ [ 'std', 'tag' ],
+                   [ 'body', [ 'begin', [ 'return', [ 'string', 'wrap' ] ] ] ] ],
+                 [ [ 'std', 'content' ],
+                   [ 'body',
+                     [ 'begin',
+                       [ 'return',
+                         [ 'getp',
+                           [ 'string', 'content' ],
+                           [ 'getp', [ 'string', 'ctx' ], [ 'this' ] ] ] ] ] ] ] ] ] ]],
+          ['template',
+           [ [ 'block', [ 'string', 'b-inner' ] ],
+             [ 'dot',
+               [ [ 'std', 'default' ],
+                 [ 'body',
+                   [ 'begin',
+                     [ 'return',
+                       [ 'call',
+                         [ 'get', 'applyCtx' ],
+                         [ 'json',
+                           [ 'binding', 'block', [ 'string', 'b-wrapper' ] ],
+                           [ 'binding',
+                             'content',
+                             [ 'getp',
+                               [ 'string', 'content' ],
+                               [ 'getp', [ 'string', 'ctx' ], [ 'this' ] ] ] ] ] ] ] ] ] ] ] ]] ] );
   });
 
   it('AST for a template with custom mode and predicate', function() {
@@ -245,36 +248,37 @@ describe('BEMHTML/Identity should expand', function() {
     var extAst = syntax.translate(ast);
     assert.deepEqual(
       extAst,
-      [ [ [ 'block', [ 'string', 'b-link' ] ],
-          [ 'dot',
-            [ [ 'elem', [ 'string', 'e1' ] ],
-              [ 'sub',
-                [ [ [ 'std', 'tag' ],
-                    [ 'body', [ 'begin', [ 'return', [ 'string', 'span' ] ] ] ] ],
-                  [ [ 'xjst',
-                      [ 'getp',
-                        [ 'string', 'url' ],
-                        [ 'getp', [ 'string', 'ctx' ], [ 'this' ] ] ] ],
-                    [ 'sub',
-                      [ [ [ 'std', 'tag' ],
-                          [ 'body', [ 'begin', [ 'return', [ 'string', 'a' ] ] ] ] ],
-                        [ [ 'std', 'attrs' ],
-                          [ 'body',
-                            [ 'begin',
-                              [ 'return',
-                                [ 'json',
-                                  [ 'binding',
-                                    'href',
-                                    [ 'getp',
-                                      [ 'string', 'url' ],
-                                      [ 'getp', [ 'string', 'ctx' ], [ 'this' ] ] ] ] ] ] ] ] ],
-                        [ [ 'mode', 'reset' ],
-                          [ 'sub',
-                            [ [ [ 'std', 'attrs' ],
-                                [ 'body',
-                                  [ 'begin',
-                                    [ 'return',
-                                      [ 'json', [ 'binding', 'href', [ 'get', 'undefined' ] ] ] ] ] ] ] ] ] ] ] ] ] ] ] ] ] ] ]
+      [ ['template',
+         [ [ 'block', [ 'string', 'b-link' ] ],
+           [ 'dot',
+             [ [ 'elem', [ 'string', 'e1' ] ],
+               [ 'sub',
+                 [ [ [ 'std', 'tag' ],
+                     [ 'body', [ 'begin', [ 'return', [ 'string', 'span' ] ] ] ] ],
+                   [ [ 'xjst',
+                       [ 'getp',
+                         [ 'string', 'url' ],
+                         [ 'getp', [ 'string', 'ctx' ], [ 'this' ] ] ] ],
+                     [ 'sub',
+                       [ [ [ 'std', 'tag' ],
+                           [ 'body', [ 'begin', [ 'return', [ 'string', 'a' ] ] ] ] ],
+                         [ [ 'std', 'attrs' ],
+                           [ 'body',
+                             [ 'begin',
+                               [ 'return',
+                                 [ 'json',
+                                   [ 'binding',
+                                     'href',
+                                     [ 'getp',
+                                       [ 'string', 'url' ],
+                                       [ 'getp', [ 'string', 'ctx' ], [ 'this' ] ] ] ] ] ] ] ] ],
+                         [ [ 'mode', 'reset' ],
+                           [ 'sub',
+                             [ [ [ 'std', 'attrs' ],
+                                 [ 'body',
+                                   [ 'begin',
+                                     [ 'return',
+                                       [ 'json', [ 'binding', 'href', [ 'get', 'undefined' ] ] ] ] ] ] ] ] ] ] ] ] ] ] ] ] ] ]] ]
     );
   });
 
