@@ -41,6 +41,7 @@ function show(tests) {
         oldCode = files['old'],
         transpiled = compat.transpile(oldCode),
         ast = syntax.parse(oldCode),
+        extAst = syntax.translate(ast),
         newCode = files['new'],
         input = files['json'];
 
@@ -51,10 +52,15 @@ function show(tests) {
       console.log(oldCode);
       // console.log('~~~');
       // console.log(newCode);
-      console.log('~~~');
+
+      console.log('~~~ ' + "parsing ...");
       pp(ast, {prompt: "ast"});
-      console.log('~~~');
-      pp(syntax.translate(ast), {prompt: "syntax.translate(ast)"});;
+
+      console.log('~~~ ' + "translating ...");
+      pp(extAst, {prompt: "syntax.translate(ast)"});
+
+      console.log('~~~ ' + "compiling ...");
+      pp(syntax.compile(extAst), {prompt: "syntax.compile(extAst)"});
     }
 
   });
@@ -274,6 +280,6 @@ describe('BEMHTML/Identity should expand', function() {
 
 });
 
-describe('BEMHTML/Compile should ', function() {
+describe.skip('BEMHTML/Compile should ', function() {
   run(tests);
 });
