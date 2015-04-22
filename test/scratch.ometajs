@@ -1,8 +1,0 @@
-var ometajs = require("ometajs");
-var JSParser = ometajs.grammars.BSJSParser;
-var pp = require("zeHelpers").prettyPrint;
-
-ometa Test <: JSParser {
-rule = letter (letter | digit | '-' | '_')* &(spaces ('{' | ':' | ','))
-    | {pp('NO MATCH', {prompt: "'NO MATCH'"});}
-}

@@ -1,19 +1,16 @@
-var syntax = require('..');
-var assert = require('assert');
-var fs = require('fs');
-var path = require('path');
-var pp = require("zeHelpers").prettyPrint;
-var bemxjst = require("bem-xjst");
-var compat = require('bemhtml-compat');
-var esprima = require("esprima");
-var esgen = require("escodegen").generate;
+var syntax = require(".."),
+    ometajs = require("ometajs"),
+    assert = require("assert"),
+    fs = require("fs"),
+    path = require("path"),
+    pp = require("zeHelpers").prettyPrint,
+    bemxjst = require("bem-xjst"),
+    compat = require("bemhtml-compat"),
+    esprima = require("esprima"),
+    esgen = require("escodegen").generate,
+    // TODO pull proper latest i-bem.bemhtml from bem-core
+    ibem = require("./fixtures/i-bem");
 
-
-var ometajs = require('ometajs');
-var BEMHTMLToXJST = require('../lib/ometa/bemhtml').BEMHTMLToXJST;
-
-// TODO pull proper latest i-bem.bemhtml from bem-core
-var ibem = require('./fixtures/i-bem');
 
 var tests = {},
     templates = [ 'info1', 'info2', 'info3', 'info5', 'info6', 'info7', 'info8', 'info9'],
@@ -86,7 +83,7 @@ var bemSiteDir = path.join(dir, 'bem-site-engine'),
       return ts;
     }, {});
 
-show(bemSiteTemplates);
+// show(bemSiteTemplates);
 // show(tests);
 
 function getSource(fn) {
