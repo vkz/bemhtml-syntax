@@ -45,45 +45,26 @@ function show(tests) {
         newCode = files['new'],
         input = files['json'];
 
-    if (t === 'info6' || t === 'info7') {
+    // if (t === 'info6' || t === 'info7') {
     // if (t === 'info9') {
-    // if (false) {
+    if (true) {
       console.log('\n ---------------------------------------\n', t, '\n');
       console.log(oldCode);
 
       console.log('~~~');
       console.log(newCode);
 
-      console.log('~~~ ' + "parsing ...");
-      pp(ast, {prompt: "ast"});
+      // console.log('~~~ ' + "parsing ...");
+      // pp(ast, {prompt: "ast"});
 
-      console.log('~~~ ' + "translating ...");
-      pp(extAst, {prompt: "syntax.translate(ast)"});
+      // console.log('~~~ ' + "translating ...");
+      // pp(extAst, {prompt: "syntax.translate(ast)"});
 
       console.log('~~~ ' + "compiling ...");
       pp(syntax.compile(oldCode), {prompt: "syntax.compile(extAst)"});
 
-      var jsonAst = [ 'json', [ 'binding', 'this.temp._bla', [ 'get', 'true' ] ] ],
-          assgnAst = [ 'getp',
-                      [ 'string', '_bla' ],
-                       [ 'getp', [ 'string', 'temp' ], [ 'this' ] ] ],
-          fn = [ 'func',
-                 '',
-                 [],
-                 [ 'begin',
-                   [ 'stmt',
-                     [ 'set',
-                       [ 'getp',
-                         [ 'string', '_bla' ],
-                         [ 'getp', [ 'string', 'temp' ], [ 'this' ] ] ],
-                       [ 'number', 0 ] ] ],
-                   [ 'stmt',
-                     [ 'set',
-                       [ 'getp', [ 'string', '_o' ], [ 'this' ] ],
-                       [ 'number', 1 ] ] ] ] ];
-
-      var B = require('../lib/ometa/bemhtml').Binding;
-      pp(B.match(assgnAst, 'stmt'), {prompt: "B.match(assgnAst, 'stmt')"});
+      // var B = require('../lib/ometa/bemhtml').Binding;
+      // pp(B.match(assgnAst, 'stmt'), {prompt: "B.match(assgnAst, 'stmt')"});
 
     }
 
@@ -91,20 +72,22 @@ function show(tests) {
 }
 
 var bemSiteDir = path.join(dir, 'bem-site-engine'),
-    bemSiteFiles = fs.readdirSync(bemSiteDir).map(function (f) {
+    bemSiteFiles = fs.readdirSync(bemSiteDir).filter(function (f) {
+      return /\.bemhtml$/i.test(f);
+    }).map(function (f) {
       return path.resolve(path.join(bemSiteDir, f));
     }),
     bemSiteTemplates =  bemSiteFiles.reduce(function (ts, f) {
       ts[f] = {
         'old': fs.readFileSync(f, utf8),
-        'new': '',
-        'json': ''
+        'new': fs.readFileSync(f + '.js', utf8),
+        'json':  ''
       };
       return ts;
     }, {});
 
-// show(bemSiteTemplates);
-show(tests);
+show(bemSiteTemplates);
+// show(tests);
 
 function getSource(fn) {
   return fn.toString().replace(/^function\s*\(\)\s*{\/\*|\*\/}$/g, '');
