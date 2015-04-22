@@ -45,8 +45,8 @@ function show(tests) {
         newCode = files['new'],
         input = files['json'];
 
-    // if (t === 'info1' || t === 'info2') {
-    if (t === 'info9') {
+    if (t === 'info6' || t === 'info7') {
+    // if (t === 'info9') {
     // if (false) {
       console.log('\n ---------------------------------------\n', t, '\n');
       console.log(oldCode);
@@ -61,12 +61,26 @@ function show(tests) {
       pp(extAst, {prompt: "syntax.translate(ast)"});
 
       console.log('~~~ ' + "compiling ...");
-      pp(esgen(esprima.parse(syntax.compile(oldCode))), {prompt: "syntax.compile(extAst)"});
+      pp(syntax.compile(oldCode), {prompt: "syntax.compile(extAst)"});
 
       var jsonAst = [ 'json', [ 'binding', 'this.temp._bla', [ 'get', 'true' ] ] ],
           assgnAst = [ 'getp',
                       [ 'string', '_bla' ],
-                       [ 'getp', [ 'string', 'temp' ], [ 'this' ] ] ];
+                       [ 'getp', [ 'string', 'temp' ], [ 'this' ] ] ],
+          fn = [ 'func',
+                 '',
+                 [],
+                 [ 'begin',
+                   [ 'stmt',
+                     [ 'set',
+                       [ 'getp',
+                         [ 'string', '_bla' ],
+                         [ 'getp', [ 'string', 'temp' ], [ 'this' ] ] ],
+                       [ 'number', 0 ] ] ],
+                   [ 'stmt',
+                     [ 'set',
+                       [ 'getp', [ 'string', '_o' ], [ 'this' ] ],
+                       [ 'number', 1 ] ] ] ] ];
 
       var B = require('../lib/ometa/bemhtml').Binding;
       pp(B.match(assgnAst, 'stmt'), {prompt: "B.match(assgnAst, 'stmt')"});
@@ -220,34 +234,40 @@ describe('BEMHTML/Identity should expand', function() {
     assert
       .deepEqual(
         extAst,
-        [ ['template',
-           [ [ 'block', [ 'string', 'b-wrapper' ] ],
-             [ 'sub',
-               [ [ [ 'std', 'tag' ],
-                   [ 'body', [ 'literal', [ 'string', 'wrap' ] ] ] ],
-                 [ [ 'std', 'content' ],
-                   [ 'body',
-                     [ 'begin',
-                       [ 'return',
-                         [ 'getp',
-                           [ 'string', 'content' ],
-                           [ 'getp', [ 'string', 'ctx' ], [ 'this' ] ] ] ] ] ] ] ] ] ]],
-          ['template',
-           [ [ 'block', [ 'string', 'b-inner' ] ],
-             [ 'dot',
-               [ [ 'std', 'def' ],
-                 [ 'body',
-                   [ 'begin',
-                     [ 'return',
-                       [ 'call',
-                         [ 'get', 'applyCtx' ],
-                         [ 'json',
-                           [ 'binding', 'block', [ 'string', 'b-wrapper' ] ],
-                           [ 'binding',
-                             'content',
-                             [ 'getp',
-                               [ 'string', 'content' ],
-                               [ 'getp', [ 'string', 'ctx' ], [ 'this' ] ] ] ] ] ] ] ] ] ] ] ]] ] );
+        [ [ 'template',
+            [ [ 'block', [ 'string', 'b-wrapper' ] ],
+              [ 'sub',
+                [ [ [ 'std', 'tag' ],
+                    [ 'body', [ 'literal', [ 'string', 'wrap' ] ] ] ],
+                  [ [ 'std', 'content' ],
+                    [ 'body',
+                      [ 'func',
+                        '',
+                        [],
+                        [ 'begin',
+                          [ 'return',
+                            [ 'getp',
+                              [ 'string', 'content' ],
+                              [ 'getp', [ 'string', 'ctx' ], [ 'this' ] ] ] ] ] ] ] ] ] ] ] ],
+          [ 'template',
+            [ [ 'block', [ 'string', 'b-inner' ] ],
+              [ 'dot',
+                [ [ 'std', 'def' ],
+                  [ 'body',
+                    [ 'func',
+                      '',
+                      [],
+                      [ 'begin',
+                        [ 'return',
+                          [ 'call',
+                            [ 'get', 'applyCtx' ],
+                            [ 'json',
+                              [ 'binding', 'block', [ 'string', 'b-wrapper' ] ],
+                              [ 'binding',
+                                'content',
+                                [ 'getp',
+                                  [ 'string', 'content' ],
+                                  [ 'getp', [ 'string', 'ctx' ], [ 'this' ] ] ] ] ] ] ] ] ] ] ] ] ] ] ] );
   });
 
   it('AST for a template with custom mode and predicate', function() {
@@ -256,36 +276,39 @@ describe('BEMHTML/Identity should expand', function() {
     var extAst = syntax.translate(ast);
     assert.deepEqual(
       extAst,
-      [ ['template',
-         [ [ 'block', [ 'string', 'b-link' ] ],
-           [ 'dot',
-             [ [ 'elem', [ 'string', 'e1' ] ],
-               [ 'sub',
-                 [ [ [ 'std', 'tag' ],
-                     [ 'body', [ 'literal', [ 'string', 'span' ] ] ] ],
-                   [ [ 'match',
-                       [ 'getp',
-                         [ 'string', 'url' ],
-                         [ 'getp', [ 'string', 'ctx' ], [ 'this' ] ] ] ],
-                     [ 'sub',
-                       [ [ [ 'std', 'tag' ],
-                           [ 'body', [ 'literal', [ 'string', 'a' ] ] ] ],
-                         [ [ 'std', 'attrs' ],
-                           [ 'body',
-                             [ 'begin',
-                               [ 'return',
-                                 [ 'json',
-                                   [ 'binding',
-                                     'href',
-                                     [ 'getp',
-                                       [ 'string', 'url' ],
-                                       [ 'getp', [ 'string', 'ctx' ], [ 'this' ] ] ] ] ] ] ] ] ],
-                         [ [ 'mode', '"reset"' ],
-                           [ 'sub',
-                             [ [ [ 'std', 'attrs' ],
-                                 [ 'body',
-                                   [ 'literal',
-                                     [ 'json', [ 'binding', 'href', [ 'get', 'undefined' ] ] ] ] ] ] ] ] ] ] ] ] ] ] ] ] ]] ]
+      [ [ 'template',
+          [ [ 'block', [ 'string', 'b-link' ] ],
+            [ 'dot',
+              [ [ 'elem', [ 'string', 'e1' ] ],
+                [ 'sub',
+                  [ [ [ 'std', 'tag' ],
+                      [ 'body', [ 'literal', [ 'string', 'span' ] ] ] ],
+                    [ [ 'match',
+                        [ 'getp',
+                          [ 'string', 'url' ],
+                          [ 'getp', [ 'string', 'ctx' ], [ 'this' ] ] ] ],
+                      [ 'sub',
+                        [ [ [ 'std', 'tag' ],
+                            [ 'body', [ 'literal', [ 'string', 'a' ] ] ] ],
+                          [ [ 'std', 'attrs' ],
+                            [ 'body',
+                              [ 'func',
+                                '',
+                                [],
+                                [ 'begin',
+                                  [ 'return',
+                                    [ 'json',
+                                      [ 'binding',
+                                        'href',
+                                        [ 'getp',
+                                          [ 'string', 'url' ],
+                                          [ 'getp', [ 'string', 'ctx' ], [ 'this' ] ] ] ] ] ] ] ] ] ],
+                          [ [ 'mode', '"reset"' ],
+                            [ 'sub',
+                              [ [ [ 'std', 'attrs' ],
+                                  [ 'body',
+                                    [ 'literal',
+                                      [ 'json', [ 'binding', 'href', [ 'get', 'undefined' ] ] ] ] ] ] ] ] ] ] ] ] ] ] ] ] ] ] ]
     );
   });
 
