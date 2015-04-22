@@ -1,5 +1,3 @@
-
-
 ####Install
 `git clone https://github.com/vkz/bemhtml-syntax.git`
 `cd bemhtml-syntax`
@@ -26,13 +24,26 @@ Options:
 
 ```
 
-####Example session
+####API
 
-```shell
+```javascript
+var syntax = require("bemhtml-syntax");
 
-...
-...
-...
+var source = 'block b1, tag: "a"';
 
+// Parse BEMHTML code
+var ast = syntax.parse(source);
+
+// Transform AST for serialisation
+var newAst = syntax.translate(ast);
+
+// Serialise to JavaScript
+var jsCode1 = syntax.generate(newAst);
+
+/* Returns:
+ * block('b1').tag()('a');
+ */
+
+// Or do everything in one go
+var jsCode2 = syntax.compile(source);
 ```
-
