@@ -46,8 +46,8 @@ function show(tests) {
         input = files['json'];
 
     // if (t === 'info1' || t === 'info2') {
-    // if (t === 'info1') {
-    if (false) {
+    if (t === 'info9') {
+    // if (false) {
       console.log('\n ---------------------------------------\n', t, '\n');
       console.log(oldCode);
 
@@ -62,6 +62,14 @@ function show(tests) {
 
       console.log('~~~ ' + "compiling ...");
       pp(esgen(esprima.parse(syntax.compile(oldCode))), {prompt: "syntax.compile(extAst)"});
+
+      var jsonAst = [ 'json', [ 'binding', 'this.temp._bla', [ 'get', 'true' ] ] ],
+          assgnAst = [ 'getp',
+                      [ 'string', '_bla' ],
+                       [ 'getp', [ 'string', 'temp' ], [ 'this' ] ] ];
+
+      var B = require('../lib/ometa/bemhtml').Binding;
+      pp(B.match(assgnAst, 'stmt'), {prompt: "B.match(assgnAst, 'stmt')"});
 
     }
 
