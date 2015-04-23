@@ -31,31 +31,58 @@ function toHtml(code, input) {
   return bemxjst.compile(ibem + code, {}).apply.call(input);
 }
 
+
 function show(tests) {
   Object.keys(tests).forEach(function (t) {
 
     var files = tests[t],
         oldCode = files['old'],
-        transpiled = compat.transpile(oldCode),
-        ast = syntax.parse(oldCode),
-        extAst = syntax.translate(ast),
         newCode = files['new'],
         input = files['json'];
 
+    // pp(esgen(esprima.parse(compat.transpile(
+    //   getSource(function () {/*
+    //            block b1, content: local(
+    //                    this.ctx.cache = null,
+    //                    this._cachePos = this._buf.length) {this._buf.length = 42;}
+    //            */})))), {prompt: "esprima.parse(),"});
+
+    // console.log('######### compiling example');
+    // var res = syntax.translate(syntax.parse(
+    //   getSource(
+    //     function () {/*
+    //            block b1, content: func(1)
+    //            */})));
+    // pp(res, {prompt: "res"});
+
     // if (t === 'info6' || t === 'info7') {
-    // if (t === 'info9') {
-    if (true) {
+    // if (t === '/Users/kozin/Documents/bemhtml-syntax/test/veged/granny-dac.bemhtml') {
+    // if (t === '/Users/kozin/Documents/bemhtml-syntax/test/veged/images.bemhtml') {
+    // if (t === '/Users/kozin/Documents/bemhtml-syntax/test/veged/web4.bemhtml') {
+    if (t === '/Users/kozin/Documents/bemhtml-syntax/test/veged/test.bemhtml') {
+    // if (t === '/Users/kozin/Documents/bemhtml-syntax/test/veged/images-broken.bemhtml') {
+    // if (false) {
       console.log('\n ---------------------------------------\n', t, '\n');
-      console.log(oldCode);
+      // console.log(oldCode);
 
-      console.log('~~~');
-      console.log(newCode);
+      // console.log('~~~ ' + 'transpiling ...');
+      // var transpiled = compat.transpile(oldCode);
+      // pp(esgen(esprima.parse(transpiled)), {prompt: "transpiled"});
 
-      // console.log('~~~ ' + "parsing ...");
-      // pp(ast, {prompt: "ast"});
+      // console.log('~~~');
+      // console.log(newCode);
 
-      // console.log('~~~ ' + "translating ...");
-      // pp(extAst, {prompt: "syntax.translate(ast)"});
+      console.log('~~~ ' + "parsing ...");
+      var ast = syntax.parse(oldCode);
+      pp(ast, {prompt: "ast"});
+
+      console.log('~~~ ' + "translating ...");
+      var extAst = syntax.translate(ast);
+      pp(extAst, {prompt: "syntax.translate(ast)"});
+
+      // var out = fs.readFileSync(path.join(dir, '/veged/out.js') , utf8);
+      // pp(out, {prompt: "out"});
+      // pp(esgen(esprima.parse(out)), {prompt: "esprima.parse(out)"});
 
       console.log('~~~ ' + "compiling ...");
       pp(syntax.compile(oldCode), {prompt: "syntax.compile(extAst)"});
@@ -321,4 +348,16 @@ describe('BEMHTML/Compile should handle assorted tests', function () {
              */},
       {block: 'b1'});
   });
+
+  // it('apply with all sorts of args', function () {
+  //   runTest(
+  //     function () {/*
+  //            block b1, content: local(
+  //            this.ctx.cache = null,
+  //            this._cachePos = this._buf.length,
+  //            this._bla = 'bla') {this._buf.length = 42;}
+  //            */},
+  //     {block: 'b1'});
+  // });
+
 });
