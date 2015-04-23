@@ -313,11 +313,12 @@ describe('BEMHTML/Compile should ', function() {
 });
 
 describe('BEMHTML/Compile should handle assorted tests', function () {
-    it('apply with string and assignment args', function () {
-      runTest(
-        function () {/*
-               block b1, content: applyNext(this.bla = 'bla', 'default', this.ctx.b = 'b')
-               */},
-        {block: 'b1'});
-    });
+
+  it('apply with all sorts of args', function () {
+    runTest(
+      function () {/*
+             block b1, content: applyNext({bla: 'bla', opa: 'opa'}, 'default', this._b = 42)
+             */},
+      {block: 'b1'});
+  });
 });
