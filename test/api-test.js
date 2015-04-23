@@ -57,11 +57,12 @@ function show(tests) {
 
     // if (t === 'info6' || t === 'info7') {
     // if (t === '/Users/kozin/Documents/bemhtml-syntax/test/veged/granny-dac.bemhtml') {
+    // if (t === '/Users/kozin/Documents/bemhtml-syntax/test/veged/granny.bemhtml') {
     // if (t === '/Users/kozin/Documents/bemhtml-syntax/test/veged/images.bemhtml') {
     // if (t === '/Users/kozin/Documents/bemhtml-syntax/test/veged/web4.bemhtml') {
-    if (t === '/Users/kozin/Documents/bemhtml-syntax/test/veged/test.bemhtml') {
+    // if (t === '/Users/kozin/Documents/bemhtml-syntax/test/veged/test.bemhtml') {
     // if (t === '/Users/kozin/Documents/bemhtml-syntax/test/veged/images-broken.bemhtml') {
-    // if (false) {
+    if (false) {
       console.log('\n ---------------------------------------\n', t, '\n');
       // console.log(oldCode);
 
@@ -74,11 +75,11 @@ function show(tests) {
 
       console.log('~~~ ' + "parsing ...");
       var ast = syntax.parse(oldCode);
-      pp(ast, {prompt: "ast"});
+      // pp(ast, {prompt: "ast"});
 
       console.log('~~~ ' + "translating ...");
       var extAst = syntax.translate(ast);
-      pp(extAst, {prompt: "syntax.translate(ast)"});
+      // pp(extAst, {prompt: "syntax.translate(ast)"});
 
       // var out = fs.readFileSync(path.join(dir, '/veged/out.js') , utf8);
       // pp(out, {prompt: "out"});
@@ -95,6 +96,22 @@ function show(tests) {
   });
 }
 
+// var vegedDir = path.join(dir, 'veged'),
+//     vegedFiles = fs.readdirSync(vegedDir).filter(function (f) {
+//       return /\.bemhtml$/i.test(f);
+//     }).map(function (f) {
+//       return path.resolve(path.join(vegedDir, f));
+//     }),
+//     vegedTemplates =  vegedFiles.reduce(function (ts, f) {
+//       ts[f] = {
+//         'old': fs.readFileSync(f, utf8),
+//         'new': '',
+//         'json':  ''
+//       };
+//       return ts;
+//     }, {});
+// pp(vegedFiles, {prompt: "vegedTemplates"});
+
 var bemSiteDir = path.join(dir, 'bem-site-engine'),
     bemSiteFiles = fs.readdirSync(bemSiteDir).filter(function (f) {
       return /\.bemhtml$/i.test(f);
@@ -110,6 +127,7 @@ var bemSiteDir = path.join(dir, 'bem-site-engine'),
       return ts;
     }, {});
 
+// show(vegedTemplates);
 // show(bemSiteTemplates);
 // show(tests);
 
@@ -175,6 +193,7 @@ function runTest(f, input, shouldBe) {
   };
 
   var result = shouldBe || toHtml(compat.transpile(source), input);
+  // pp(esgen(esprima.parse(compat.transpile(source))), {prompt: "compat.transpile(source)"});
   assert.equal(toHtml(out, input), result);
 }
 
@@ -349,15 +368,15 @@ describe('BEMHTML/Compile should handle assorted tests', function () {
       {block: 'b1'});
   });
 
-  // it('apply with all sorts of args', function () {
-  //   runTest(
-  //     function () {/*
-  //            block b1, content: local(
-  //            this.ctx.cache = null,
-  //            this._cachePos = this._buf.length,
-  //            this._bla = 'bla') {this._buf.length = 42;}
-  //            */},
-  //     {block: 'b1'});
-  // });
+  it('local', function () {
+    runTest(
+      function () {/*
+             block b1, content: local(
+             this.ctx.cache = null,
+             this._cachePos = this._buf.length,
+             this._bla = 'bla') {this._buf.length = 42;}
+             */},
+      {block: 'b1'});
+  });
 
 });
