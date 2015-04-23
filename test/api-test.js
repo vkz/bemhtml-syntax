@@ -108,20 +108,22 @@ function test(name, oldCode, newCode, input) {
       esgen(esprima.parse(result)),
       esgen(esprima.parse(newCode)));
 
-    describe("Compiled " + name + " when applied should", function () {
+    if (input) {
+      describe("Compiled " + name + " when applied should", function () {
 
-      it("produce the same HTML as compat-compiled", function () {
-        assert.equal(
-          toHtml(result, input),
-          toHtml(compat.transpile(oldCode), input));
-      });
+        it("produce the same HTML as compat-compiled", function () {
+          assert.equal(
+            toHtml(result, input),
+            toHtml(compat.transpile(oldCode), input));
+        });
 
-      it("produce the same HTML as hand-written template", function () {
-        assert.equal(
-          toHtml(result, input),
-          toHtml(newCode, input));
+        it("produce the same HTML as hand-written template", function () {
+          assert.equal(
+            toHtml(result, input),
+            toHtml(newCode, input));
+        });
       });
-    });
+    }
   });
 }
 
@@ -135,6 +137,18 @@ function run(tests) {
 
     test(name, oldCode, newCode, input);
   });
+}
+
+function runTest(f, input, shouldBe) {
+  var source = getSource(f);
+  try {
+    var out = syntax.compile(source);
+  } catch (e) {
+    throw e
+  };
+
+  var result = shouldBe || toHtml(compat.transpile(source), input);
+  assert.equal(toHtml(out, input), result);
 }
 
 describe('BEMHTML/Parser should parse', function() {
@@ -222,7 +236,7 @@ describe('BEMHTML/Identity should expand', function() {
                   [ [ 'std', 'content' ],
                     [ 'body',
                       [ 'func',
-                        '',
+                        null,
                         [],
                         [ 'begin',
                           [ 'return',
@@ -235,7 +249,7 @@ describe('BEMHTML/Identity should expand', function() {
                 [ [ 'std', 'def' ],
                   [ 'body',
                     [ 'func',
-                      '',
+                      null,
                       [],
                       [ 'begin',
                         [ 'return',
@@ -273,7 +287,7 @@ describe('BEMHTML/Identity should expand', function() {
                           [ [ 'std', 'attrs' ],
                             [ 'body',
                               [ 'func',
-                                '',
+                                null,
                                 [],
                                 [ 'begin',
                                   [ 'return',
@@ -296,4 +310,14 @@ describe('BEMHTML/Identity should expand', function() {
 
 describe('BEMHTML/Compile should ', function() {
   run(tests);
+});
+
+describe('BEMHTML/Compile should handle assorted tests', function () {
+    it('apply with string and assignment args', function () {
+      runTest(
+        function () {/*
+               block b1, content: applyNext(this.bla = 'bla', 'default', this.ctx.b = 'b')
+               */},
+        {block: 'b1'});
+    });
 });

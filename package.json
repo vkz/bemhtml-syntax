@@ -20,7 +20,7 @@
         "escodegen": ""
     },
     "devDependencies": {
-        "bem-xjst": "~0.3.4",
+        "bem-xjst": "1.0.0",
         "bemhtml-compat": ""
     }
 }
