@@ -1,27 +1,33 @@
 {
   "name": "bemhtml-syntax",
   "version": "0.0.1",
-  "description": "",
+  "description": "BEMHTML syntax converter",
   "main": "lib/syntax.js",
+  "homepage": "https://github.com/vkz/bemhtml-syntax",
   "bin": {
     "bemhtml-syntax": "./bin/bemhtml-syntax"
   },
   "scripts": {
     "test": "mocha --reporter spec test/*-test.js"
   },
-  "repository": "",
-  "author": "",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/vkz/bemhtml-syntax.git"
+  },
+  "author": {
+    "name": "Vlad Kozin",
+    "url": "http://github.com/vkz"
+  },
   "license": "",
   "dependencies": {
-    "ometajs": "~3.2.4",
-    "xjst": "~0.4.21",
+    "ometajs": "3.2.4",
     "esprima": "",
     "coa": "",
-    "escodegen": "",
     "js-beautify": ""
   },
   "devDependencies": {
-    "bem-xjst": "1.0.0",
-    "bemhtml-compat": ""
+    "bem-xjst": "^1.0.0",
+    "bemhtml-compat": "",
+    "escodegen": ""
   }
 }
