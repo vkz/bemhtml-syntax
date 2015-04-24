@@ -5,13 +5,13 @@ var syntax = require(".."),
 
 // TODO more granular tests that target specific grammar rules
 
-describe('BEMHTMLToJS should compile', function() {
+describe('BEMHTMLToJS', function() {
 
-  describe('Basic templates', function () {
+  describe('Compile basic templates', function () {
     testDir('basic');
   });
 
-  describe('Templates with specific features', function () {
+  describe('Compile featured templates', function () {
 
     it('applyNext setting mode', function () {
       test(
