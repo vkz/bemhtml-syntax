@@ -1,4 +1,4 @@
 block('logo')(
   tag()('img'),
-  attrs()({'alt': 'logo', 'href': 'http://...'})
+  attrs()({alt: 'logo', href: 'http://...'})
 )
