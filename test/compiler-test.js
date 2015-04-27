@@ -32,5 +32,31 @@ describe('BEMHTMLToJS', function() {
         {block: 'b1'});
     });
 
+      it('should collapse single-stmt nesting', function () {
+        test(function () {/*
+      block head-stripe {
+        elem x { tag: 'span' }
+        elem age { tag: 'span' }
+        elem agreement-button { tag: 'span' }
+        elem close-text { tag: 'span' }
+        elem text2 { tag: 'span' }
+        elem close { tag: 'span' }
+      }
+      */},
+      {block: "head-stripe", elem: "close"},
+      undefined,
+      function () {/*
+        block("head-stripe")(
+          elem("x").tag()("span"),
+          elem("age").tag()("span"),
+          elem("agreement-button").tag()("span"),
+          elem("close-text").tag()("span"),
+          elem("text2").tag()("span"),
+          elem("close").tag()("span"))
+             */}
+            );
+      });
+
+    // END describe
   });
 });

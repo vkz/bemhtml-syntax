@@ -90,11 +90,11 @@ describe('BEMHTMLIdentity', function() {
                                              [ 'string', 'url' ],
                                              [ 'getp', [ 'string', 'ctx' ], [ 'this' ] ] ] ] ] ] ] ] ] ],
                              [ [ 'mode', '"reset"' ],
-                               [ 'sub',
-                                 [ [ [ 'std', 'attrs' ],
-                                     [ 'body',
-                                       [ 'literal',
-                                         [ 'json', [ 'binding', 'href', [ 'get', 'undefined' ] ] ] ] ] ] ] ] ] ] ] ] ] ] ] ] ] ] ]);
+                               [ 'dot',
+                                 [ [ 'std', 'attrs' ],
+                                   [ 'body',
+                                     [ 'literal',
+                                       [ 'json', [ 'binding', 'href', [ 'get', 'undefined' ] ] ] ] ] ] ] ] ] ] ] ] ] ] ] ] ] ]);
   });
 
 });
