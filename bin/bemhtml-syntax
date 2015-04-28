@@ -2,15 +2,15 @@
 
 var js_beatufier_defaults = {
   "indent_size": 4,
-  "indent_char": " ",
-  "eol": "\\n",
+  "indent_char": JSON.stringify(" "),
+  "eol": JSON.stringify("\n"),
   "indent_level": 0,
   "indent_with_tabs": false,
   "dont_preserve_newlines": false,
   "max_preserve_newlines": 10,
   "jslint_happy": false,
   "space_after_anon_function": false,
-  "brace_style": "collapse",
+  "brace_style": JSON.stringify("collapse"),
   "keep_array_indentation": false,
   "keep_function_indentation": false,
   "no_space_before_conditional": false,
@@ -18,7 +18,7 @@ var js_beatufier_defaults = {
   "eval_code": false,
   "unescape_strings": false,
   "wrap_line_length": 0,
-  "wrap_attributes": "auto",
+  "wrap_attributes": JSON.stringify("auto"),
   "wrap_attributes_indent_size": 4,
   "end_with_newline": false
 };
@@ -95,7 +95,16 @@ cmd
         return {stream: v, path: "stdin"}
       }
     })
-    .end();
+    .end()
+  .opt()
+    .name('quotes').title('Prefer "single" or "double" quotes (default: "single")')
+    .short('q').long('quotes')
+    .end()
+  .opt()
+    .name('quote_keys').title('Quote object keys (default: false)')
+    .short('Q').long('quote-keys')
+    .flag()
+    .end()
 
 addBeautfierOpts(cmd)
   .act(function(options) {
