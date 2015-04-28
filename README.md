@@ -1,35 +1,58 @@
+
+Convert BEMHTML in old-syntax into new JS-style syntax.
 ####Install
-`git clone https://github.com/vkz/bemhtml-syntax.git`
-`cd bemhtml-syntax`
-`npm install`
-
-`npm test` will run tests.
-
-**TODO** final indentation should obviously be in bem-style not generic produced by Esprima+Escodegen combo.
+`npm -g install bemhtml-syntax`
 
 ####Use
 
 ```shell
-
-kozin@:~/Documents/bemhtml-syntax$ bin/bemhtml-syntax -h
-
-Usage:
-  bemhtml-syntax [OPTIONS] [ARGS]
-
-
-Options:
-  -h, --help : Help
-  -o OUTPUT, --output=OUTPUT : Output to file (default: stdout)
-  -i INPUT, --input=INPUT : File to convert (default: stdin)
-
+bemhtml-syntax [OPTIONS] [ARGS]
 ```
 
+For example, convert
+```js
+// cat test/basic/info6.bemhtml
+// ----------------------------
+block b-wrapper {
+    tag: 'wrap'
+    content: this.ctx.content
+}
+
+block b-inner, default: applyCtx({ block: 'b-wrapper', content: this.ctx.content })
+```
+into
+```js
+// bemhtml-syntax -q "double" -Q -i test/basic/info6.bemhtml
+// ---------------------------------------------------------
+block("b-wrapper")(
+    tag()("wrap"),
+    content()(function() {
+        return this.ctx.content
+    })
+);
+
+block("b-inner").def()(function() {
+    return applyCtx({
+        "block": "b-wrapper",
+        "content": this.ctx.content
+    })
+})
+```
+Accepts a handful of options to control code-formatting. Of note:
+```shell
+  -q QUOTES, --quotes=QUOTES : Prefer "single" or "double" quotes (default: "single")
+  -Q, --quote-keys : Quote object keys (default: false)
+  -s INDENT_SIZE, --indent-size=INDENT_SIZE : (default: 4)
+  -p, --dont-preserve-newlines : (default: false)
+```
+Most options used by [js-beautify][] should just work.
+  
 ####API
 
 ```javascript
-var syntax = require("bemhtml-syntax");
-
-var source = 'block b1, tag: "a"';
+var syntax = require('bemhtml-syntax'),
+    source = 'block b1, tag: "a"',
+    options = { indent_size: 2 };
 
 // Parse BEMHTML code
 var ast = syntax.parse(source);
@@ -38,12 +61,10 @@ var ast = syntax.parse(source);
 var newAst = syntax.translate(ast);
 
 // Serialise to JavaScript
-var jsCode1 = syntax.generate(newAst);
-
-/* Returns:
- * block('b1').tag()('a');
- */
+var jsCode1 = syntax.generate(newAst, options);
 
 // Or do everything in one go
-var jsCode2 = syntax.compile(source);
+var jsCode2 = syntax.compile(source, options);
 ```
+
+[js-beautify]: https://github.com/beautify-web/js-beautify
