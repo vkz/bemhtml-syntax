@@ -1,30 +1,105 @@
 #!/usr/bin/env node
 
-require('coa').Cmd()
-    .name(process.argv[1])
-    .helpful()
-    .opt()
-        .name('output').title('Output to file (default: stdout)')
-        .short('o').long('output')
-        .output()
-        .end()
-    .opt()
-        .name('input').title('File to convert (default: stdin)')
-        .short('i').long('input')
-        .def(process.stdin)
-        .val(function (v) {
-          if (typeof v === "string") {
-            var fs = require("fs");
-            var s = fs.createReadStream(v, { encoding: 'utf8' });
-            s.pause();
-            return {stream: s, path: fs.realpathSync(v)};
-          } else {
-            return {stream: v, path: "stdin"}
-          }
-        })
-       .end()
-    .act(function(options) {
-        return require('../lib/syntax')
-            .run(options);
+var js_beatufier_defaults = {
+  "indent_size": 4,
+  "indent_char": " ",
+  "eol": "\\n",
+  "indent_level": 0,
+  "indent_with_tabs": false,
+  "dont_preserve_newlines": false,
+  "max_preserve_newlines": 10,
+  "jslint_happy": false,
+  "space_after_anon_function": false,
+  "brace_style": "collapse",
+  "keep_array_indentation": false,
+  "keep_function_indentation": false,
+  "no_space_before_conditional": false,
+  "break_chained_methods": false,
+  "eval_code": false,
+  "unescape_strings": false,
+  "wrap_line_length": 0,
+  "wrap_attributes": "auto",
+  "wrap_attributes_indent_size": 4,
+  "end_with_newline": false
+};
+
+var js_beautifier_opts = {
+  s: "indent_size",
+  c: "indent_char",
+  e: "eol",
+  l: "indent_level",
+  t: "indent_with_tabs",
+  p: "dont_preserve_newlines",
+  m: "max_preserve_newlines",
+  j: "jslint_happy",
+  a: "space_after_anon_function",
+  b: "brace_style",
+  k: "keep_array_indentation",
+  // no such cli flag in js-beautifier
+  K: "keep_function_indentation",
+  // no such cli flag in js-beautifier
+  A: "no_space_before_conditional",
+  B: "break_chained_methods",
+  x: "unescape_strings",
+  w: "wrap_line_length",
+  n: "end_with_newline"
+};
+
+var cmd = require('coa').Cmd();
+
+function addBeautfierOpts(cmd) {
+
+  function isFlag(o) { return ; }
+
+  Object.keys(js_beautifier_opts).forEach(function (o) {
+    var NAME = js_beautifier_opts[o],
+        FLAG = (typeof js_beatufier_defaults[NAME]) === 'boolean',
+        LONG = NAME.replace(/_/g,'-'),
+        DEF = js_beatufier_defaults[NAME],
+        TITLE = '(default: ' + DEF + ')';
+    var result = cmd.opt().name(NAME).title(TITLE)
+          .short(o).long(LONG);
+
+    if (FLAG)
+      return result.flag().end();
+
+    return result.val(function (v) {
+      return ((typeof DEF) === 'number')?
+        Number.parseInt(v):
+        v;
+    }).end();
+  }, cmd);
+
+  return cmd;
+}
+
+cmd
+  .name(process.argv[1])
+  .helpful()
+  .opt()
+    .name('output').title('Output to file (default: stdout)')
+    .short('o').long('output')
+    .output()
+    .end()
+  .opt()
+    .name('input').title('File to convert (default: stdin)')
+    .short('i').long('input')
+    .def(process.stdin)
+    .val(function (v) {
+      if (typeof v === "string") {
+        var fs = require("fs");
+        var s = fs.createReadStream(v, { encoding: 'utf8' });
+        s.pause();
+        return {stream: s, path: fs.realpathSync(v)};
+      } else {
+        return {stream: v, path: "stdin"}
+      }
     })
-    .run();
+    .end();
+
+addBeautfierOpts(cmd)
+  .act(function(options) {
+    return require('../lib/syntax')
+      .run(options);
+  })
+  .run();
