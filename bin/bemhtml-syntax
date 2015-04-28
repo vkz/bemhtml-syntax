@@ -99,6 +99,11 @@ cmd
   .opt()
     .name('quotes').title('Prefer "single" or "double" quotes (default: "single")')
     .short('q').long('quotes')
+    .val(function (v) {
+      if (v === 'single' || v === 'double')
+        return v;
+      return this.reject('quotes must be "single" or "double"');
+    })
     .end()
   .opt()
     .name('quote_keys').title('Quote object keys (default: false)')
