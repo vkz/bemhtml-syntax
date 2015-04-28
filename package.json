@@ -21,13 +21,14 @@
   "license": "",
   "dependencies": {
     "ometajs": "3.2.4",
-    "esprima": "",
-    "coa": "",
-    "js-beautify": ""
+    "esprima": "2.2.0",
+    "coa": "1.0.1",
+    "js-beautify": "1.5.5"
   },
   "devDependencies": {
-    "bem-xjst": "^1.0.0",
-    "bemhtml-compat": "",
-    "escodegen": ""
+    "bem-xjst": "1.0.0",
+    "bemhtml-compat": "0.1.2",
+    "escodegen": "1.6.1",
+    "mocha": "2.2.4"
   }
 }
