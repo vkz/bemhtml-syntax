@@ -21,6 +21,22 @@ describe('BEMHTMLToJS', function() {
         {block: 'b1'});
     });
 
+    it('force return applyNext', function () {
+      test(
+        function () {/*
+               block b1, default: {
+                 applyNext()
+               }
+               */},
+        {block: 'b1'}),
+      undefined,
+      function () {/*
+             block('b1').def()(function() {
+             return applyNext()
+             })
+             */}
+    });
+
     it('local with args', function () {
       test(
         function () {/*
