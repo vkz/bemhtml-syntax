@@ -48,7 +48,56 @@ describe('BEMHTMLToJS', function() {
         {block: 'b1'});
     });
 
-      it('should collapse single-stmt nesting', function () {
+    it('string literals', function () {
+      test(
+        function () {/*
+               block b-link, elem e1 {
+                 attrs: {
+                   'oframebust': "{'*.mtproxy1.yandex.net': '', '*.mtproxy2.yandex.net': '' }"
+                 }
+               }
+
+               block b-link, elem e2 {
+                 attrs: {
+                   'oframebust': "{\"*.mtproxy1.yandex.net\": \"\", \"*.mtproxy2.yandex.net\": \"\" }"
+                 }
+               }
+
+               block b-link, elem e3 {
+                 attrs: {
+                   'oframebust': '{"*.mtproxy1.yandex.net": "", "*.mtproxy2.yandex.net": "" }'
+                 }
+               }
+
+               block b-link, elem e4 {
+                 attrs: {
+                   'oframebust': '{\'*.mtproxy1.yandex.net\': \'\', \'*.mtproxy2.yandex.net\': \'\' }'
+                 }
+               }
+                                   */},
+      undefined,
+      undefined,
+      function () {/*
+               block('b-link').elem('e1').attrs()({
+                   oframebust: '{"*.mtproxy1.yandex.net": "", "*.mtproxy2.yandex.net": "" }'
+               });
+
+               block('b-link').elem('e2').attrs()({
+                   oframebust: '{\'*.mtproxy1.yandex.net\': \'\', \'*.mtproxy2.yandex.net\': \'\' }'
+               });
+
+               block('b-link').elem('e3').attrs()({
+                   oframebust: '{\'*.mtproxy1.yandex.net\': \'\', \'*.mtproxy2.yandex.net\': \'\' }'
+               });
+
+               block('b-link').elem('e4').attrs()({
+                   oframebust: '{"*.mtproxy1.yandex.net": "", "*.mtproxy2.yandex.net": "" }'
+               })
+                       */}
+            );
+    });
+
+    it('should collapse single-stmt nesting', function () {
         test(function () {/*
       block head-stripe {
         elem x { tag: 'span' }

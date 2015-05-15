@@ -42,7 +42,7 @@ common.toHtml;
 function testCompile(source, json, html, target) {
   var code = getSource(source),
       compiled = syntax.compile(code),
-      result = html || toHtml(compat.transpile(code), json);
+      result = html || (json && toHtml(compat.transpile(code), json));
 
   // Test against a hand-written template when supplied
   if (target) {
@@ -52,15 +52,14 @@ function testCompile(source, json, html, target) {
       esgen(esprima.parse(compiled)),
       esgen(esprima.parse(target)));
 
-    // HTML
-    assert.equal(
+    // HTML via target
+    json && assert.equal(
       toHtml(compiled, json),
-      toHtml(target, json));
-
+      toHtml(target, json)); 
   };
 
-  // HTML
-  assert.equal(
+  // HTML provided or via compat
+  result && assert.equal(
     toHtml(compiled, json),
     result);
 }
