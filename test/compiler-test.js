@@ -75,25 +75,30 @@ describe('BEMHTMLToJS', function() {
                  }
                }
                                    */},
-      undefined,
-      undefined,
+        [
+          {block: 'b-link', elem: 'e1'},
+          {block: 'b-link', elem: 'e2'},
+          {block: 'b-link', elem: 'e3'},
+          {block: 'b-link', elem: 'e4'}
+        ],
+        undefined,
       function () {/*
                block('b-link').elem('e1').attrs()({
-                   oframebust: '{"*.mtproxy1.yandex.net": "", "*.mtproxy2.yandex.net": "" }'
+                   oframebust: '{\'*.mtproxy1.yandex.net\': \'\', \'*.mtproxy2.yandex.net\': \'\' }'
                });
 
                block('b-link').elem('e2').attrs()({
-                   oframebust: '{\'*.mtproxy1.yandex.net\': \'\', \'*.mtproxy2.yandex.net\': \'\' }'
+                   oframebust: '{\"*.mtproxy1.yandex.net\": \"\", \"*.mtproxy2.yandex.net\": \"\" }'
                });
 
                block('b-link').elem('e3').attrs()({
-                   oframebust: '{\'*.mtproxy1.yandex.net\': \'\', \'*.mtproxy2.yandex.net\': \'\' }'
+                   oframebust: '{\"*.mtproxy1.yandex.net\": \"\", \"*.mtproxy2.yandex.net\": \"\" }'
                });
 
                block('b-link').elem('e4').attrs()({
-                   oframebust: '{"*.mtproxy1.yandex.net": "", "*.mtproxy2.yandex.net": "" }'
+                   oframebust: '{\'*.mtproxy1.yandex.net\': \'\', \'*.mtproxy2.yandex.net\': \'\' }'
                })
-                       */}
+                                      */}
             );
     });
 

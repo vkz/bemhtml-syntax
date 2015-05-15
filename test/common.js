@@ -55,7 +55,7 @@ function testCompile(source, json, html, target) {
     // HTML via target
     json && assert.equal(
       toHtml(compiled, json),
-      toHtml(target, json)); 
+      toHtml(target, json));
   };
 
   // HTML provided or via compat
