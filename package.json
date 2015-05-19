@@ -23,7 +23,8 @@
     "ometajs": "3.2.4",
     "esprima": "2.2.0",
     "coa": "1.0.1",
-    "js-beautify": "1.5.5"
+    "js-beautify": "1.5.5",
+    "bemhtml-source-convert": ""
   },
   "devDependencies": {
     "bem-xjst": "1.0.0",
