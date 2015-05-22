@@ -1,0 +1,13 @@
+{
+    "name": "bemhtml-source-convert",
+    "version": "0.0.1",
+    "description": "BEMHTML source conversion tool",
+    "ignore": [
+        "node_modules",
+        "libs"
+    ],
+    "dependencies": {
+        "bem-core": "git://github.com/bem/bem-core.git#v2.4.0"
+    },
+    "private": true
+}

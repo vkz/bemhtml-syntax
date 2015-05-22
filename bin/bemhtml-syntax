@@ -107,6 +107,28 @@ cmd
     .end()
 
 addBeautfierOpts(cmd)
+  .opt()
+    .name('format').title('output format (default: "bemhtml")')
+    .short('f').long('format')
+    .val(function (v) {
+      if (v === 'bemhtml' || v === 'bh')
+        return v;
+      return this.reject('output format must be "bemhtml" or "bh"');
+    })
+    .req()
+    .def('bemhtml')
+    .end()
+  .opt()
+    .name('bhSet').title('Set bh-template options (default: { \"jsAttrName\": \"onclick\" , \"jsAttrScheme\": \"js\" })')
+    .short('bhS').long('bhSet')
+    .val(function(v) {return JSON.parse(v);})
+    .end()
+  .opt()
+    .name('strictOff')
+    .title('Ignore bh-incompatibility warnings, perform best-effort conversion')
+    .short('S').long('strictOff')
+    .flag()
+    .end()
   .cmd()
     .name('bh').title('Convert old BEMHTML syntax to BH').helpful()
     .apply(require('../node_modules/bemhtml-source-convert/bin/opts').COA)
