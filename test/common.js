@@ -2,7 +2,10 @@ var syntax = require(".."),
     assert = require("assert"),
     bemxjst = require("bem-xjst"),
     // TODO pull proper latest i-bem.bemhtml from bem-core
-    ibem = require("./fixtures/i-bem"),
+    ibem = require('fs')
+      .readFileSync(
+        __dirname + '/../bower_components/bem-core/common.blocks/i-bem/i-bem.bemhtml',
+        'utf8'),
     compat = require("bemhtml-compat"),
     esprima = require("esprima"),
     esgen = require("escodegen").generate,
