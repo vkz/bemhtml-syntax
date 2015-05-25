@@ -108,7 +108,7 @@ cmd
 
 addBeautfierOpts(cmd)
   .opt()
-    .name('format').title('output format (default: "bemhtml")')
+    .name('format').title('output "bemhtml" or "bh" (default: "bemhtml")')
     .short('f').long('format')
     .val(function (v) {
       if (v === 'bemhtml' || v === 'bh')
@@ -128,10 +128,6 @@ addBeautfierOpts(cmd)
     .title('Ignore bh-incompatibility warnings, perform best-effort conversion')
     .short('S').long('strictOff')
     .flag()
-    .end()
-  .cmd()
-    .name('bh').title('Convert old BEMHTML syntax to BH').helpful()
-    .apply(require('../node_modules/bemhtml-source-convert/bin/opts').COA)
     .end()
   .act(function(options) {
     return require('../lib/syntax')
