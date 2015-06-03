@@ -14,6 +14,7 @@ var ibem = require('fs')
     path = require("path"),
     fs = require("fs");
 
+var pp = require("zeHelpers").prettyPrint;
 
 var dir = path.join(path.dirname(module.filename), 'basic'),
     utf8 = { encoding:'utf8' },
