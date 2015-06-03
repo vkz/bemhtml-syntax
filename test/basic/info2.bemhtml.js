@@ -1,4 +1,4 @@
 block('logo')(
-  tag()('img'),
-  attrs()({alt: 'logo', href: 'http://...'})
+  tag()('img'),                              // end of line comment
+  attrs()({alt: 'logo', href: 'http://...'}) // another comment
 )

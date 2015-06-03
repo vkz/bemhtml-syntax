@@ -1,7 +1,6 @@
 var syntax = require(".."),
     assert = require("assert"),
     bemxjst = require("bem-xjst"),
-    // TODO pull proper latest i-bem.bemhtml from bem-core
     ibem = require('fs')
       .readFileSync(
         __dirname + '/../bower_components/bem-core/common.blocks/i-bem/i-bem.bemhtml',
@@ -25,7 +24,7 @@ common.getSource = getSource;
 function testParse(source, result) {
     var code = getSource(source),
         ast = syntax.parse(code);
-    assert.deepEqual(ast, result );
+  assert.deepEqual(ast, result );
 }
 common.testParse = testParse;
 
@@ -36,6 +35,14 @@ function testTransform(source, result, options) {
     assert.deepEqual(extAst, result );
 }
 common.testTransform = testTransform;
+
+function testKParse(source, result) {
+  var code = getSource(source),
+      ast = syntax.kparse(code);
+  pp(ast, {prompt: "ast"});
+  assert.deepEqual(ast, result );
+}
+common.testKParse = testKParse;
 
 function toHtml(source, input) {
   return bemxjst.compile(ibem + source, {}).apply.call(input);

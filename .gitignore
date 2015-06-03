@@ -1,3 +1,6 @@
 /node_modules/
 /.DS_Store
 /test/.DS_Store
+/test/veged/
+/bower_components/
+/lib/.DS_Store
