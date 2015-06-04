@@ -26,7 +26,7 @@ var dir = path.join(path.dirname(module.filename), 'basic'),
       return fs.readFileSync(path.join(dir, f + '.bemhtml'), utf8);
     });
 
-describe.only('Meta info', function() {
+describe.skip('Meta info', function() {
 
   it('should parse whole-line comments', function() {
     test(tests[0],
@@ -138,7 +138,7 @@ describe.only('Meta info', function() {
   });
 
   it('should parse multi-line comments', function() {
-    test(tests[1],
+    test(tests[2],
          []
          // [ 'stmts',
          //   [ 'stmt',
