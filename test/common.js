@@ -100,6 +100,7 @@ function testDir(dirname) {
             msg = maybeRead(base + '.msg') || name;
         it(msg, function () {
           testCompile(source, json, html, target);
+          // testKParse(source);
         });
       });
 }
