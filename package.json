@@ -24,7 +24,7 @@
     "esprima": "2.3.0",
     "coa": "1.0.1",
     "js-beautify": "1.5.5",
-    "bemhtml-compat": "0.1.2",
+    "bemhtml-compat": "",
     "krasota": "",
 
     "bh": "2.2.0",
