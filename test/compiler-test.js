@@ -45,7 +45,19 @@ describe('BEMHTMLToJS', function() {
                this._cachePos = this._buf.length,
                this._bla = 'bla') {this._buf.length = 42;}
                */},
-        {block: 'b1'});
+        {block: 'b1'},
+        undefined,
+        function () {/*
+          block('b1').content()(function() {
+            local({
+              'ctx.cache': null,
+              _cachePos: this._buf.length,
+              _bla: 'bla'
+            })(function() {
+              this._buf.length = 42
+            })
+          })
+            */});
     });
 
     it('string literals', function () {
