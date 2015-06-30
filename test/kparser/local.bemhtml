@@ -1,0 +1,15 @@
+block b1, content: local(
+  this.ctx.cache = null,
+  'reset',
+  this._cachePos = this._buf.length,
+  this._bla = 'bla') {this._buf.length = 42;}
+
+block b2, content: {
+  local(
+    this.ctx.cache = null,
+    'reset',
+    this._cachePos = this._buf.length,
+    this._bla = 'bla') {
+    this._buf.length = 42;
+  };
+}

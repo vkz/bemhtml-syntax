@@ -39,9 +39,8 @@ function testTransform(source, result, options) {
 common.testTransform = testTransform;
 
 function testKParse(source, result) {
-  var code = getSource(source),
-      ast = syntax.kparse(code);
-  pp(ast, {prompt: "ast"});
+  var ast = syntax.kparse(source);
+  // pp(ast, {prompt: "ast"});
   assert.deepEqual(ast, result );
 }
 common.testKParse = testKParse;

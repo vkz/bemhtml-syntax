@@ -1,0 +1,5 @@
+block logo {
+  // before comment
+  tag: { return this.ctx.bla }
+  // end of template comment
+}
