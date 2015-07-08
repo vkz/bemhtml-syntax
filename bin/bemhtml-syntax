@@ -105,6 +105,11 @@ cmd
     .short('Q').long('quote-keys')
     .flag()
     .end()
+  .opt()
+    .name('quote_reserved').title('Quote object keys that are reserved words (default: false)')
+    .short('Qr').long('quote-reserved')
+    .flag()
+    .end()
 
 addBeautfierOpts(cmd)
   .opt()
