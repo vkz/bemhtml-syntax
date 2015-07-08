@@ -1,6 +1,6 @@
 {
   "name": "bemhtml-syntax",
-  "version": "0.0.10",
+  "version": "0.0.11",
   "description": "BEMHTML syntax converter",
   "main": "lib/syntax.js",
   "homepage": "https://github.com/vkz/bemhtml-syntax",
