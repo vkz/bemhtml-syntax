@@ -22,7 +22,7 @@
   "license": "",
   "dependencies": {
     "bower": "",
-    "ometajs": "4.0.x",
+    "ometajs": "file:../ometa-js",
     "esprima": "2.3.0",
     "coa": "1.0.1",
     "js-beautify": "1.5.5",
