@@ -1,6 +1,6 @@
 {
   "name": "bemhtml-syntax",
-  "version": "0.0.14",
+  "version": "0.0.15",
   "description": "BEMHTML syntax converter",
   "main": "lib/syntax.js",
   "homepage": "https://github.com/vkz/bemhtml-syntax",
@@ -22,12 +22,11 @@
   "license": "",
   "dependencies": {
     "bower": "",
-    "ometajs": "file:../ometa-js",
+    "ometajs": "4.0.x",
     "esprima": "2.3.0",
     "coa": "1.0.1",
     "js-beautify": "1.5.5",
     "bemhtml-compat": "",
-    "krasota": "https://github.com/vkz/krasota.js.git#current",
 
     "bh": "2.2.0",
     "uglify-js": "2.4.15",
