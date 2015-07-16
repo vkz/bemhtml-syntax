@@ -1,0 +1,7 @@
+block my-block, (this.elem === 'e1') {
+  tag: 'span'
+}
+
+block my-block, custom.this.elem === 'e2' {
+  tag: 'span'
+}

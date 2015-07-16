@@ -105,10 +105,18 @@ describe('BEMHTMLIdentity', function() {
                                        [ 'json', [ 'binding', 'href', [ 'get', 'undefined' ] ] ] ] ] ] ] ] ] ] ] ] ] ] ] ] ] ]);
   });
 
-  var drop_notelem_file = path
-        .join(path.dirname(module.filename), 'featured/drop-notelem.bemhtml');
+  var drop = 'drop-notelem',
+      dropFile = path
+        .join(path.dirname(module.filename), 'featured/' + drop + '.bemhtml');
   it('should drop !this.elem predicates', function () {
-    test(common.maybeRead(drop_notelem_file),
-         require('./featured/drop-notelem.result').ast);});
+    test(common.maybeRead(dropFile),
+         require('./featured/' + drop +'.result').ast);});
+
+  var elemMatch = 'elemMatch',
+      elemMatchFile = path
+        .join(path.dirname(module.filename), 'featured/' + elemMatch + '.bemhtml');
+  it('should elemMatch predicates with this.elem', function () {
+    test(common.maybeRead(elemMatchFile),
+         require('./featured/' + elemMatch +'.result').ast);});
 
 });
