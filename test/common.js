@@ -76,6 +76,7 @@ function maybeRead(f) {
     return undefined;
   }
 }
+common.maybeRead = maybeRead;
 
 function testDir(dirname) {
   var dir = path.join(path.dirname(module.filename), dirname),

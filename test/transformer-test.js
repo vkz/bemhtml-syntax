@@ -1,6 +1,8 @@
 var syntax = require(".."),
     assert = require("assert"),
-    test = require("./common").testTransform;
+    common = require("./common"),
+    test = common.testTransform,
+    path = require("path");
 
 describe('BEMHTMLIdentity', function() {
 
@@ -102,5 +104,11 @@ describe('BEMHTMLIdentity', function() {
                                      [ 'literal',
                                        [ 'json', [ 'binding', 'href', [ 'get', 'undefined' ] ] ] ] ] ] ] ] ] ] ] ] ] ] ] ] ] ]);
   });
+
+  var drop_notelem_file = path
+        .join(path.dirname(module.filename), 'featured/drop-notelem.bemhtml');
+  it('should drop !this.elem predicates', function () {
+    test(common.maybeRead(drop_notelem_file),
+         require('./featured/drop-notelem.result').ast);});
 
 });
