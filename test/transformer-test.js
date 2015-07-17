@@ -119,4 +119,12 @@ describe('BEMHTMLIdentity', function() {
     test(common.maybeRead(elemMatchFile),
          require('./featured/' + elemMatch +'.result').ast);});
 
+  var replaceThisUnder = 'replace-this-underscore',
+      replaceThisUnderFile = path
+        .join(path.dirname(module.filename), 'featured/' + replaceThisUnder + '.bemhtml');
+  it('should replace this._ with this', function () {
+    test(common.maybeRead(replaceThisUnderFile),
+         require('./featured/' + replaceThisUnder +'.result').ast,
+         { replace_this_: true });});
+
 });

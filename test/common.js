@@ -29,10 +29,10 @@ function testParse(source, result) {
 }
 common.testParse = testParse;
 
-function testTransform(source, result) {
+function testTransform(source, result, options) {
     var code = getSource(source),
-        ast = syntax.parse(code),
-        extAst = syntax.translate(ast);
+        ast = syntax.parse(code, options),
+        extAst = syntax.translate(ast, options);
     assert.deepEqual(extAst, result );
 }
 common.testTransform = testTransform;
