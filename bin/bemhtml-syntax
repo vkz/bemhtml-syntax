@@ -110,6 +110,11 @@ cmd
     .short('Qr').long('quote-reserved')
     .flag()
     .end()
+  .opt()
+    .name('replace_this_').title('Replace this._ with this in templates (default: false)')
+    .short('Rt').long('replace-this')
+    .flag()
+    .end()
 
 addBeautfierOpts(cmd)
   .opt()
