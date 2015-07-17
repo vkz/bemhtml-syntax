@@ -1,0 +1,11 @@
+function Name() {
+  this._ = this;
+}
+
+block my-block, this._.isSimple(this.ctx): {
+  tag: 'span'
+}
+
+block my-block, this._.bla.test(this.ctx): {
+  tag: 'span'
+}
