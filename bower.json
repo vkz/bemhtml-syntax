@@ -1,6 +1,6 @@
 {
-    "name": "bemhtml-source-convert",
-    "version": "0.0.1",
+    "name": "bemhtml-syntax",
+    "version": "0.0.19",
     "description": "BEMHTML source conversion tool",
     "ignore": [
         "node_modules",

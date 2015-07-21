@@ -144,3 +144,4 @@ addBeautfierOpts(cmd)
       .run(options);
   })
   .run();
+

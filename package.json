@@ -1,6 +1,6 @@
 {
   "name": "bemhtml-syntax",
-  "version": "0.0.18",
+  "version": "0.0.20",
   "description": "BEMHTML syntax converter",
   "main": "lib/syntax.js",
   "homepage": "https://github.com/vkz/bemhtml-syntax",
@@ -8,7 +8,6 @@
     "bemhtml-syntax": "./bin/bemhtml-syntax"
   },
   "scripts": {
-    "install": "./node_modules/.bin/bower install",
     "test": "mocha --reporter spec test/*-test.js"
   },
   "repository": {
@@ -21,7 +20,6 @@
   },
   "license": "",
   "dependencies": {
-    "bower": "",
     "ometajs": "4.0.x",
     "esprima": "2.3.0",
     "coa": "1.0.1",
@@ -33,10 +31,12 @@
     "html-differ": "0.5.0",
     "lodash": "2.4.1",
     "bem-xjst": "1.0.0",
-    "xjst": "0.4.21"
+    "xjst": "0.4.21",
+    "q": ""
   },
   "devDependencies": {
     "escodegen": "1.6.1",
-    "mocha": "2.2.4"
+    "mocha": "2.2.4",
+    "bower": "1.4.x"
   }
 }
