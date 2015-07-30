@@ -36,6 +36,7 @@
     "q": ""
   },
   "devDependencies": {
+    "bower": "1.4.x",
     "escodegen": "1.6.1",
     "mocha": "2.2.4",
     "bower": "1.4.x"
