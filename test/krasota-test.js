@@ -350,7 +350,7 @@ describe('Meta info', function() {
                                           [ 'pred',
                                             [ 'customMode',
                                               [ 'spacesAndComments', [] ],
-                                              [ 'name', 'reset' ],
+                                              [ 'string', '\'', [ 'r', 'e', 's', 'e', 't' ] ],
                                               [ 'spacesAndComments', [ [ 'spaces', ' ' ] ] ] ] ] ],
                                         [ 'spacesAndComments', [] ],
                                         [ 'templateBlock',
