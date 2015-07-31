@@ -1115,7 +1115,7 @@ describe('Meta info', function() {
 
   });
 
-  describe.skip('Compiler', function () {
+  describe('Compiler', function () {
     testDir('basic', testCompile);
   });
 
