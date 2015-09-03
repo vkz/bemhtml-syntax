@@ -70,6 +70,6 @@ block input, content {
 // much work. The only case where I prefer to just leave !this.elem as is and
 // not drop it. For now.
 block input, this.isTrue {
-  !this.elem: { return; }
   content, !this.elem: { return; }
+  !this.elem: { return; }
 }
