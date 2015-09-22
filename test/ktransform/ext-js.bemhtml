@@ -1,0 +1,3 @@
+function outside(a, b) { return 'hello';};
+
+block b1, content: 'bla'

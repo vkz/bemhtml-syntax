@@ -1,0 +1,6 @@
+block b-wrapper {
+    tag: 'wrap'
+    content: this.ctx.content
+}
+
+block b-inner, default: applyCtx({ block: 'b-wrapper', content: this.ctx.content })

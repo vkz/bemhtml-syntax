@@ -1,0 +1,3 @@
+block my-block, this._.isSimple(this.ctx): {
+  return BEMHTML.apply(bla, a = 1);
+}

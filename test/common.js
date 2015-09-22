@@ -11,7 +11,9 @@ var syntax = require(".."),
     esgen = es.generate,
     path = require("path"),
     fs = require("fs"),
-    beautify = require("js-beautify").js_beautify;
+    beautify = require("js-beautify").js_beautify,
+    krasota = require("krasota"),
+    KParser = krasota.KrasotaJSParser;
 
 var pp = require("zeHelpers").prettyPrint;
 
@@ -64,6 +66,7 @@ function astEqual(a, b, skipTag) {
     }
   }, true);
 }
+common.astEqual = astEqual;
 
 function testTransform(source, result, options) {
     var code = getSource(source),
@@ -72,6 +75,13 @@ function testTransform(source, result, options) {
     assert.deepEqual(extAst, result );
 }
 common.testTransform = testTransform;
+
+function testKTransform(source, result, options) {
+  var sAst = KParser.match(syntax.kcompile(source, options), 'topLevel'),
+      rAst = KParser.match(result, 'topLevel');
+  assert.ok(common.astEqual(sAst, rAst, 'spacesAndComments'));
+}
+common.testKTransform = testKTransform;
 
 function testKParse(source, result, skipTag) {
   var ast = syntax.kparse(source);

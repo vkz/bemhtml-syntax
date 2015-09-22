@@ -26,6 +26,11 @@ var dir = path.dirname(module.filename),
     testParse = function (file, result) {
       var source = getSource(file);
       common.testKParse(source, result);
+    },
+    testTransform = function (file, options) {
+      var source = getSource(file),
+          result = getSource(file + '.js');
+      common.testKTransform(source, result, options);
     };
 
 describe('Meta info', function() {
@@ -1063,6 +1068,56 @@ describe('Meta info', function() {
                                   [ 'spacesAndComments', [] ] ] ] ] ] ] ] ],
                     [ 'stmtEnd', [ 'spacesAndComments', [] ], '\n' ],
                     [ 'spacesAndComments', [] ] ] ]);
+    });
+
+  });
+
+  describe('Transformer', function () {
+
+    it('should transform mixed js and templates', function () {
+      testTransform('./ktransform/ext-js.bemhtml', {})
+    });
+
+    it('should transform multiple templates', function () {
+      testTransform('./ktransform/multi.bemhtml', {});
+    });
+
+    it('should transform deeply nested template', function() {
+      testTransform('./ktransform/nested.bemhtml', {});
+    });
+
+    it('should transform mod and elemMod', function() {
+      testTransform('./ktransform/elem-mod.bemhtml', {});
+    });
+
+    it('should transform applyCtx expr', function () {
+      testTransform('./ktransform/general-body-apply-expr.bemhtml', {})
+    });
+
+    it('should transform local', function () {
+      testTransform('./ktransform/local.bemhtml', {})
+    });
+
+    it('should transform whole-line comments', function() {
+      testTransform('./ktransform/whole-line-comments.bemhtml', {});
+    });
+
+    it('should transform end-of-line comments', function() {
+      testTransform('./ktransform/end-of-line-comments.bemhtml', {});
+    });
+
+    it('should transform multi-line comments', function() {
+      testTransform('./ktransform/multi-line-comments.bemhtml', {});
+    });
+
+    it('should transform before and after comments', function () {
+      testTransform('./ktransform/before-after-comments.bemhtml', {});
+    });
+
+    // ----- bem-xjst4 ------------------------------------
+
+    it('should replace BEMHTML.apply with this.reapply', function () {
+      testTransform('./ktransform/reapply.bemhtml', {});
     });
 
   });
