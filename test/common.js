@@ -30,6 +30,41 @@ function testParse(source, result) {
 }
 common.testParse = testParse;
 
+function empty(a) { return a.length === 0; }
+function isAst(a) { return Array.isArray(a); }
+function isPrim(a) { return !isAst(a); }
+function dropTag(a, tag) {
+  return a.filter(function (el) {
+    return !isAst(el) || (el[0] !== tag);
+  });
+}
+
+function astEqual(a, b, skipTag) {
+  if (skipTag) {
+    a = dropTag(a, skipTag);
+    b = dropTag(b, skipTag);
+  }
+
+  if (empty(a)) {
+    return empty(b);
+  }
+
+  if (a.length !== b.length) return false;
+
+  return a.reduce(function (res, aNode, i) {
+    var bNode = b[i];
+
+    // propagate false
+    if (!res) return false;
+
+    if (isAst(aNode)) {
+      return isAst(bNode) && astEqual(aNode, bNode, skipTag);
+    } else {
+      return isPrim(bNode) && (aNode === bNode);
+    }
+  }, true);
+}
+
 function testTransform(source, result, options) {
     var code = getSource(source),
         ast = syntax.parse(code, options),
@@ -38,10 +73,11 @@ function testTransform(source, result, options) {
 }
 common.testTransform = testTransform;
 
-function testKParse(source, result) {
+function testKParse(source, result, skipTag) {
   var ast = syntax.kparse(source);
   // pp(ast, {prompt: "ast"});
-  assert.deepEqual(ast, result );
+  // assert.deepEqual(ast, result );
+  assert.ok(astEqual(ast, result, skipTag));
 }
 common.testKParse = testKParse;
 
