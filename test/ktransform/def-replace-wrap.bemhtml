@@ -1,0 +1,17 @@
+block b1 {
+  elem e1, default: {
+    applyCtx({
+      block: 'wrapper',
+      content: this.ctx
+    });
+  }
+  this.elem === 'e2' && this._buf === this._.bla {
+    content: { applyCtx({block: 'wrapper', content: 'ctx' }) }
+  }
+  elem e3 {
+    default: { return applyCtx({block: 'wrapper', content: 'ctx' }) }
+  }
+  elem e4 {
+    default: { apply({test: 42, elemMods: 'bla'});}
+  }
+}

@@ -1,0 +1,6 @@
+block b1 {
+   this.elem === 'separator': []
+   this.elem === 'bla': []
+}
+
+this.elem === 'separator', block b2: {return 'bla'}

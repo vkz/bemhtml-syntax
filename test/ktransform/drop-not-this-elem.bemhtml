@@ -1,0 +1,75 @@
+function bla() {
+  return ;
+}
+
+// 0
+!this.elem, block input, content:{ return; }
+
+// 0'
+!this.elem {
+  block b, content: { return; }
+  block b, attrs: { return; }
+}
+
+// 1
+block input, !this.elem, content:{ return; }
+
+// 2
+block input, content, !this.elem: { return; }
+
+// 3
+block input, !this.elem {
+  content: { return; }
+}
+
+// 3'
+block input, !this.elem {
+  content: { return; }
+  attrs: { return; }
+}
+
+// 4
+block input {
+  !this.elem, content: { return; }
+}
+
+// 4' -sub-
+block input {
+  !this.elem, content: { return; }
+  elem bla, content: { return; }
+}
+
+// 4' -sub-
+block input {
+  elem bla, content: { return; }
+  !this.elem, content: { return; }
+}
+
+// 4'' -sub-
+// NOTE case where the sub templates need to be spliced in at the level above
+block input {
+  !this.elem {
+    content: { return; }
+    attrs: { return; }
+  }
+  elem bla, content: { return; }
+}
+
+// 5
+block input {
+  content, !this.elem: { return; }
+}
+
+// 5'
+block input, content {
+  !this.elem: { return; }
+}
+
+// 5'' -sub-
+// TODO weird case that doesn't seem to pop up in real life yet would require
+// much work. The only case where I prefer to just leave !this.elem as is and
+// not drop it. For now.
+block input, this.isTrue {
+  content, !this.elem: { return; }
+  !this.elem: { return; }
+}

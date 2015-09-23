@@ -1120,6 +1120,48 @@ describe('Meta info', function() {
       testTransform('./ktransform/reapply.bemhtml', {});
     });
 
+    it('should recognise def+applyCtx patterns', function () {
+      testTransform('./ktransform/def-replace-wrap.bemhtml', {
+        replace_this_: true,
+        elemMatch: true,
+        wrapPattern: true,
+        returnFromDef: true
+      });
+    });
+
+    it('should replace this._', function () {
+      testTransform('./ktransform/replace-this_.bemhtml', {
+        replace_this_: true
+      });
+    });
+
+    it('should wrap predicates with this.elem in elemMatch', function () {
+      testTransform('./ktransform/wrap-this-elem.bemhtml', {
+        elemMatch: true
+      });
+    });
+
+    // TODO make throwing optional and write a warning to stdErr instead. Fix this test then.
+    it('should report predicates with this.elem', function () {
+      assert.throws(
+        syntax.kcompile(getSource('./ktransform/report-this-elem.bemhtml'), {elemMatch: false})
+      );
+    });
+
+    it('should drop !this.elem predicates', function () {
+      testTransform('./ktransform/drop-not-this-elem.bemhtml', {
+        replace_this_: true,
+        elemMatch: true,
+        wrapPattern: true,
+        assertNoThisElem: false,
+        assertNoBuf: false,
+        returnFromDef: true,
+        applySetsMode: true,
+        applyCheckFields: true,
+        assertHasBlock: true
+      });
+    });
+
   });
 
   describe('Compiler', function () {

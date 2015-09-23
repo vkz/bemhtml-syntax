@@ -1,0 +1,3 @@
+block b, this._.isSimple(this.ctx): {
+  return this._.bla;
+}
