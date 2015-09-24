@@ -1162,6 +1162,10 @@ describe('Meta info', function() {
       });
     });
 
+    it('should return last apply and handle apply args', function () {
+      testTransform('./ktransform/return-apply.bemhtml', {});
+    });
+
   });
 
   describe('Compiler', function () {
