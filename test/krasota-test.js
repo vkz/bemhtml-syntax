@@ -1166,6 +1166,10 @@ describe('Meta info', function() {
       testTransform('./ktransform/return-apply.bemhtml', {});
     });
 
+    it('should collapse single stmt subs', function () {
+      testTransform('./ktransform/collapse-subs.bemhtml', {});
+    });
+
   });
 
   describe('Compiler', function () {

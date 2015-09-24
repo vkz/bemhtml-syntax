@@ -1,0 +1,8 @@
+block head-stripe {
+  elem x { tag: 'span' }
+  elem age { tag: 'span' }
+  elem agreement-button { tag: 'span' }
+  elem close-text { tag: 'span' }
+  elem text2 { tag: 'span' }
+  elem close { tag: 'span' }
+}
