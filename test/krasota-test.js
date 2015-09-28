@@ -33,7 +33,7 @@ var dir = path.dirname(module.filename),
       common.testKTransform(source, result, options);
     };
 
-describe('Meta info', function() {
+describe.only('Meta info', function() {
 
   describe('Parser', function () {
 
@@ -1141,12 +1141,37 @@ describe('Meta info', function() {
       });
     });
 
-    // TODO make throwing optional and write a warning to stdErr instead. Fix this test then.
     it('should report predicates with this.elem', function () {
       assert.throws(
-        syntax.kcompile(getSource('./ktransform/report-this-elem.bemhtml'), {elemMatch: false})
+        function () {
+          syntax.kcompile(getSource('./ktransform/report-this-elem.bemhtml'), {assertNoThisElem: true});
+        }
       );
     });
+
+    it('should report templates not matching some block', function () {
+      assert.throws(
+        function () {
+          syntax.kcompile(getSource('./ktransform/report-has-no-block.bemhtml'), {assertHasBlock: true});
+        }
+      );
+    });
+
+    it('should report this._buf', function () {
+      assert.throws(
+        function () {
+          syntax.kcompile(getSource('./ktransform/report-this_buf.bemhtml'), {assertNoBuf: true});
+        }
+      );
+    });
+
+    // it('should report apply with no mode specified', function () {
+    //   assert.throws(
+    //     function () {
+    //       syntax.kcompile(getSource('./ktransform/report-apply-no-mode.bemhtml'), {applySetsMode: true});
+    //     }
+    //   );
+    // });
 
     it('should drop !this.elem predicates', function () {
       testTransform('./ktransform/drop-not-this-elem.bemhtml', {
@@ -1166,13 +1191,17 @@ describe('Meta info', function() {
       testTransform('./ktransform/return-apply.bemhtml', {});
     });
 
+    it('should return from def()', function () {
+      testTransform('./ktransform/def-returns.bemhtml', {returnFromDef: true});
+    });
+
     it('should collapse single stmt subs', function () {
       testTransform('./ktransform/collapse-subs.bemhtml', {});
     });
 
   });
 
-  describe('Compiler', function () {
+  describe.skip('Compiler', function () {
     testDir('basic', testCompile);
   });
 
