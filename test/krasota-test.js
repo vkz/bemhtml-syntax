@@ -1131,7 +1131,8 @@ describe.only('Meta info', function() {
 
     it('should replace this._', function () {
       testTransform('./ktransform/replace-this_.bemhtml', {
-        replace_this_: true
+        replace_this_: true,
+        wrapPattern: true
       });
     });
 

@@ -1,3 +1,5 @@
-block b, this._.isSimple(this.ctx): {
+block a, default: applyCtx(this._.extend(this.ctx, { elem: 'bla' }))
+block b, default: { apply(this._.bla); }
+block c, this._.isSimple(this.ctx): {
   return this._.bla;
 }
