@@ -1,0 +1,7 @@
+block b, elem link, default: {
+  applyCtx(this._.extend(this.ctx, {
+    block: 'link',
+    elem: undefined,
+    mix: { block: this.block, elem: this.elem }
+  }));
+}

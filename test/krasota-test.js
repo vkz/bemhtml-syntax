@@ -1127,12 +1127,24 @@ describe.only('Meta info', function() {
         wrapPattern: true,
         returnFromDef: true
       });
+      testTransform('./ktransform/def-applyCtx.bemhtml', {
+        replace_this_: true,
+        elemMatch: true,
+        wrapPattern: true,
+        returnFromDef: true
+      });
+      testTransform('./ktransform/def-no-wrap.bemhtml', {
+        replace_this_: true,
+        elemMatch: true,
+        wrapPattern: false,
+        returnFromDef: true
+      });
     });
 
     it('should replace this._', function () {
       testTransform('./ktransform/replace-this_.bemhtml', {
         replace_this_: true,
-        wrapPattern: true
+        wrapPattern: false
       });
     });
 

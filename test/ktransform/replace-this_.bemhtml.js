@@ -1,4 +1,4 @@
-block('a').replace()(function() {
+block('a').def()(function() {
     return applyCtx(this.extend(this.ctx, {
         elem: 'bla'
     }));

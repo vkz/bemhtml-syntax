@@ -3,6 +3,6 @@ block('b-wrapper')(
   content()(function () { return this.ctx.content;})
 )
 
-block('b-inner').replace()(function () {
+block('b-inner').def()(function () {
   return applyCtx({ block: 'b-wrapper', content: this.ctx.content });
 })
