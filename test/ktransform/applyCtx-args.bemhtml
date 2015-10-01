@@ -1,0 +1,7 @@
+block dropdown-menu {
+    elem menu, default: {
+        applyCtx(this._inDropdownMenu = true, {
+            block: 'bla'
+        });
+    }
+}

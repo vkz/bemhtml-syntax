@@ -1094,6 +1094,11 @@ describe.only('Meta info', function() {
       testTransform('./ktransform/general-body-apply-expr.bemhtml', {})
     });
 
+    // TODO better print warning for such cases
+    it('should handle applyCtx with assignments gracefully', function () {
+      testTransform('./ktransform/applyCtx-args.bemhtml', {})
+    });
+
     it('should transform local', function () {
       testTransform('./ktransform/local.bemhtml', {})
     });

@@ -9,3 +9,9 @@ block slider: {
   }
   apply();
 }
+
+block button, mod round yes {
+    default: applyNext(
+      this.ctx.mods['only-icon'] = 'bla'
+   )
+}

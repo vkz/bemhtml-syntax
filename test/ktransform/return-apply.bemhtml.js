@@ -11,3 +11,9 @@ block('slider')(function() {
   }
   return apply();
 })
+
+block('button').mod('round', 'yes').def()(function() {
+  return applyNext({
+    'ctx.mods[\'only-icon\']': 'bla'
+  });
+})
