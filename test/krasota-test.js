@@ -8,7 +8,7 @@ var syntax = require(".."),
 
 var ibem = require('fs')
       .readFileSync(
-        __dirname + '/../bower_components/bem-core/common.blocks/i-bem/i-bem.bemhtml',
+        __dirname + '/i-bem.bemhtml',
         'utf8'),
     compat = require("bemhtml-compat"),
     esprima = require("esprima"),
