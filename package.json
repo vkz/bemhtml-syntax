@@ -1,6 +1,6 @@
 {
   "name": "bemhtml-syntax",
-  "version": "0.0.20",
+  "version": "0.0.21",
   "description": "BEMHTML syntax converter",
   "main": "lib/syntax.js",
   "homepage": "https://github.com/vkz/bemhtml-syntax",
@@ -39,6 +39,6 @@
     "bower": "1.4.x",
     "escodegen": "1.6.1",
     "mocha": "2.2.4",
-    "bower": "1.4.x"
+    "ze-helpers": ""
   }
 }
