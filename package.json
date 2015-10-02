@@ -1,6 +1,6 @@
 {
   "name": "bemhtml-syntax",
-  "version": "0.0.23",
+  "version": "0.0.24",
   "description": "BEMHTML syntax converter",
   "main": "lib/syntax.js",
   "homepage": "https://github.com/vkz/bemhtml-syntax",
@@ -25,7 +25,7 @@
     "coa": "1.0.1",
     "js-beautify": "1.5.5",
     "bemhtml-compat": "",
-    "krasota": "https://github.com/vkz/krasota.js.git#current",
+    "krasota": "",
 
     "bh": "2.2.0",
     "uglify-js": "2.4.15",
@@ -33,10 +33,10 @@
     "lodash": "2.4.1",
     "bem-xjst": "1.0.0",
     "xjst": "0.4.21",
+    "escodegen": "1.6.1",
     "q": ""
   },
   "devDependencies": {
-    "escodegen": "1.6.1",
     "mocha": "2.2.4",
     "ze-helpers": ""
   }
